@@ -11,6 +11,6 @@ This is a single page phonebook app. This app is responsive, but due to time lim
 
 - Then run either of the following scripts
 	- To view in a development environment: 
- 		- npm start
+ 			- npm start
 	- To build the app:
 		- npm run build
