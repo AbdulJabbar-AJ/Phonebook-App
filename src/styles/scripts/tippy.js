@@ -13,15 +13,4 @@ export default function tippyScripts () {
     interactive: true,
     trigger: 'mouseenter'
   })
-
-  // const settingsNavItem = document.querySelector('.navItem.settings')
-  //
-  // tippy(settingsNavItem, {
-  //   content: `<div>${Settings}</div>`,
-  //   arrow: true,
-  //   arrowType: 'round', // or 'sharp' (default)
-  //   animation: 'fade',
-  //   interactive: true,
-  //   trigger: 'click'
-  // })
 }

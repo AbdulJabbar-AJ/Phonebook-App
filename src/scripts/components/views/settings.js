@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { toggleSort, toggleDisplay } from '../../redux/actions'
-import toggle from '../../../media/img/toggle.svg'
 import toggleLeft from '../../../media/img/icons/toggleLeft.svg'
 import toggleRight from '../../../media/img/icons/toggleRight.svg'
 

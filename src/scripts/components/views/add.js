@@ -2,10 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { newContact, addContact, showContact, contactKeyIncrement, nameError } from '../../redux/actions'
 import Tippy from '@tippy.js/react'
-import contacts, { Contact } from '../../initdata.js'
+import { Contact } from '../../initdata.js'
 import add from '../../../media/img/icons/addWhite.svg'
 import remove from '../../../media/img/icons/remove.svg'
-// import { Phone, Email, Address, Dates, Other, Notes } from './contactCard'
 
 export const alphanumeric = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '-', ':', ';', '<', '>', '=', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~']
 
