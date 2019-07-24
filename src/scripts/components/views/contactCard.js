@@ -111,6 +111,27 @@ export function Dates (props) {
 }
 
 export function Other (props) {
+  function createLink (type, value) {
+    let link
+
+    switch (type) {
+      case 'Twitter':
+        link = `http://twitter.com/${value}`
+        break
+      case 'Instagram':
+        link = `http://www.instagram.com/${value}`
+        break
+      default:
+        link = `${value}`
+    }
+
+    if (!link.startsWith('http')) {
+      link = `http://${link}`
+    }
+
+    return <a href={link} target='_blank'>{value}</a>
+  }
+
   const others = props.other
   let i = -1
   const other = others && others[0] ? (
@@ -121,7 +142,7 @@ export function Other (props) {
         return (
           <div className='entry' key={i} >
             <div className='type'>{other.type}</div>
-            <div className='data'>{other.data}</div>
+            <div className='data'>{createLink(other.type, other.data)}</div>
           </div>
         )
       })}
