@@ -7,10 +7,10 @@ This is a single page phonebook app. This app is responsive, but due to time lim
 
 #### To Run
 - Please run the following npm script from the root folder to install all dependencies:
-		- npm install
+	- npm install
 
 - Then run either of the following scripts
 	- To view in a development environment: 
- 		- npm start
+		- npm start
 	- To build the app:
 		- npm run build
