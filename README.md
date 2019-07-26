@@ -20,31 +20,43 @@ ___
 ### Features
 
 #### Sticky Scroll
+
 TEXT
+
 ![Sticky Scroll](../assets/Assets/sticky_scroll.gif?raw=true)
 ===
 
 #### Search
+
 TEXT
+
 ![Search](../assets/Assets/search.gif?raw=true)
 ===
 
 #### Google Maps API
+
 TEXT
+
 ![Google Maps API](../assets/Assets/Google_Maps_API.gif?raw=true)
 ===
 
 #### Dynamic Textarea on type
+
 TEXT
+
 ![Dynamic Textarea](../assets/Assets/Dynamic_textarea.gif?raw=true)
 ===
 
 #### New Group
+
 TEXT
+
 ![New Groups](../assets/Assets/new_group.gif?raw=true)
 ===
 
 #### Delete Favourites
+
 TEXT
+
 ![Delete Favourites](../assets/Assets/delete_favs.gif?raw=true)
 ===
