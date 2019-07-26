@@ -14,3 +14,9 @@ This is a single page phonebook app. This app is responsive, but due to time lim
 		- npm start
 	- To build the app:
 		- npm run build
+
+### Features
+
+#### Sticky Scroll
+TEXT
+![Sticky Scroll](../assets/Assets/sticky scroll.gif)
