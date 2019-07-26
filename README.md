@@ -20,4 +20,4 @@ This is a single page phonebook app. This app is responsive, but due to time lim
 #### Sticky Scroll
 TEXT
 
-![Sticky Scroll](../assets/Assets/sticky_scroll.gif?)
+![Sticky Scroll](../assets/Assets/sticky_scroll.gif?raw=true)
