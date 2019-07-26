@@ -17,46 +17,46 @@ This is a single page phonebook app. This app is responsive, but due to time lim
 
 ___
 
-### Features
+### Some Features
 
 #### Sticky Scroll
 
-TEXT
+Heading letters are sticky to the top of the contacts section.
 
 ![Sticky Scroll](../assets/Assets/sticky_scroll.gif?raw=true)
 ===
 
 #### Search
 
-TEXT
+Search for first name, last name, or company name, and in any order.
 
 ![Search](../assets/Assets/search.gif?raw=true)
 ===
 
 #### Google Maps API
 
-TEXT
+Dynamical static map via Google Maps API
 
 ![Google Maps API](../assets/Assets/Google_Maps_API.gif?raw=true)
 ===
 
 #### Dynamic Textarea on type
 
-TEXT
+The textarea under 'Notes' expands as you type, in order to view the whole note without wasting whitespace.
 
 ![Dynamic Textarea](../assets/Assets/Dynamic_textarea.gif?raw=true)
 ===
 
 #### New Group
 
-TEXT
+Create a new group and add group members.
 
 ![New Groups](../assets/Assets/new_group.gif?raw=true)
 ===
 
-#### Delete Favourites
+#### Delete Mulitple Favourites
 
-TEXT
+Contacts can be be removed from favourites by clicking on the star icon under their contact card. This shows how you can remove multiple contacts from the favourites with ease.
 
 ![Delete Favourites](../assets/Assets/delete_favs.gif?raw=true)
 ===
