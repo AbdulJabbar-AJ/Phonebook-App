@@ -142,7 +142,7 @@ data.forEach(contact => {
 
   con.notes = 'This is a note.'
 
-  con.name.company = 'hackajob.co'
+  con.name.company = 'Some Company Ltd.'
 
   contacts.push(con)
 })

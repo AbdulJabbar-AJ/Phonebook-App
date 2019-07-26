@@ -45,6 +45,45 @@ class Add extends React.Component {
   }
 }
 
+
+class Letter extends React.Component {
+  componentDidMount () {
+    if (this.props.contacts.length) {
+      const header = document.querySelector('.heading')
+      const heading = document.querySelector('.heading h1')
+      const section = document.querySelector('.contactsPanel')
+      const contactList = document.querySelector('.contactList')
+      const letters = Array.from(contactList.querySelectorAll('.letter'))
+
+      section.scrollTo(0, this.props.contactsScroll)
+
+      section.addEventListener('scroll', () => {
+        const top = section.scrollTop
+
+        if (top === 0) {
+          heading.removeAttribute('style')
+          contactList.removeAttribute('style')
+        } else if (top <= 100) {
+          heading.style.fontSize = `${32 - (top / 10)}px`
+        } else {
+          heading.style.fontSize = '22px'
+        }
+
+        letters.forEach(letter => {
+          letter.style.top = `${header.offsetHeight}px`
+        })
+
+        this.props.contactsScrollTop(top)
+      })
+    }
+  }
+
+  render () {
+    return <div className='letter'>{this.props.letter}</div>
+  }
+}
+
+
 class ContactList extends React.Component {
   sortListOfObjects (array, prop) {
     array.sort(
@@ -144,7 +183,7 @@ class ContactList extends React.Component {
         {phonebook.map((section) => {
           return (
             <div className='contactSection' key={section.letter}>
-              <div className='letter'>{section.letter}</div>
+              <Letter {...this.props} letter={section.letter} />
               <div className='contacts'>
                 {section.cons.map((con) => {
                   return <Contact con={con} key={con.id} type='Contact' />
@@ -172,35 +211,6 @@ class ContactsView extends React.Component {
   componentDidMount () {
     if (!this.props.activeContact && window.innerWidth >= 560) {
       this.props.showContact(this.props.contacts[0])
-    }
-
-    if (this.props.contacts.length) {
-      const header = document.querySelector('.heading')
-      const heading = document.querySelector('.heading h1')
-      const section = document.querySelector('.contactsPanel')
-      const contactList = document.querySelector('.contactList')
-      const letters = Array.from(contactList.querySelectorAll('.letter'))
-
-      section.scrollTo(0, this.props.contactsScroll)
-
-      section.addEventListener('scroll', () => {
-        const top = section.scrollTop
-
-        if (top === 0) {
-          heading.removeAttribute('style')
-          contactList.removeAttribute('style')
-        } else if (top <= 100) {
-          heading.style.fontSize = `${32 - (top / 10)}px`
-        } else {
-          heading.style.fontSize = '22px'
-        }
-
-        letters.forEach(letter => {
-          letter.style.top = `${header.offsetHeight}px`
-        })
-
-        this.props.contactsScrollTop(top)
-      })
     }
   }
 
