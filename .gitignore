@@ -1,0 +1,12 @@
+### Project specific ###
+node_modules/
+.cache/
+dist/
+
+
+### macOS ###
+.DS_*
+
+### WebStorm ###
+.idea/
+
