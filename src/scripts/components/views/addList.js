@@ -31,7 +31,6 @@ class AddList extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const contacts = this.props.contacts
     const consList = this.props.consList
     const editGrpList = this.props.editGrpList
