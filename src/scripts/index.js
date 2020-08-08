@@ -1,18 +1,18 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-// import 'babel-polyfill' ??? Needed??
+import { render } from 'react-dom'
+import 'babel-polyfill'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import rootReducer from './scripts/redux/reducers'
-import View from './scripts/components/navbar'
-import { windowResize } from './scripts/redux/actions'
-import './main.scss'
-import tippyScripts from './styles/scripts/tippy.js'
+import rootReducer from './redux/reducers'
+import View from './components/navbar'
+import { windowResize } from './redux/actions'
+import '../styles/main.scss'
+import tippyScripts from '../styles/scripts/tippy.js'
 
 const store = createStore(rootReducer)
 const root = document.getElementById('root')
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <View />
   </Provider>

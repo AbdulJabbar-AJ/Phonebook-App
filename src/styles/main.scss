@@ -1,12 +1,12 @@
-@import "styles/sass/variables";
-@import "styles/sass/mixins";
-@import "styles/animations";
-@import "styles/views/contacts";
-@import "styles/views/favourites";
-@import "styles/views/groups";
-@import "styles/views/settings";
-@import "styles/views/contactcard";
-@import "styles/views/edit";
+@import "sass/variables";
+@import "sass/mixins";
+@import "animations";
+@import "views/contacts";
+@import "views/favourites";
+@import "views/groups";
+@import "views/settings";
+@import "views/contactcard";
+@import "views/edit";
 
 html,
 body,
@@ -18,7 +18,7 @@ body,
 }
 
 #root {
-  background: url('./media/img/desk.jpg') no-repeat;
+  background: url('../media/img/desk.jpg') no-repeat;
   background-size: cover;
   font-family: $family;
   font-weight: 300;
