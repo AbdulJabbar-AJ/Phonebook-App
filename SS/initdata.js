@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addContact } from './redux/actions'
+import { addContact } from '../redux/actions'
 
 export class Contact {
   constructor (name, phone, email, address, dates, other, notes, id) {

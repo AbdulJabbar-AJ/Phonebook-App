@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import 'babel-polyfill'
-import { showContact, hideContact, hideFav, showFav, hideGroupMem, addFavourite, removeFavourite, reduceGroups, editContact } from '../../redux/actions'
-import close from '../../../media/img/icons/close.svg'
-import edit from '../../../media/img/icons/edit.svg'
-import trash from '../../../media/img/icons/trash.svg'
-import favTrue from '../../../media/img/icons/favTrue.svg'
-import favFalse from '../../../media/img/icons/favFalse2.svg'
+import { showContact, hideContact, hideFav, showFav, hideGroupMem, addFavourite, removeFavourite, reduceGroups, editContact } from '../redux/actions'
+import close from '../../media/img/icons/close.svg'
+import edit from '../../media/img/icons/edit.svg'
+import trash from '../../media/img/icons/trash.svg'
+import favTrue from '../../media/img/icons/favTrue.svg'
+import favFalse from '../../media/img/icons/favFalse2.svg'
 import Edit from './edit'
-import style from '../../mapStyle'
-import back from '../../../media/img/icons/back.svg'
+import style from '../mapStyle'
+import back from '../../media/img/icons/back.svg'
 
 export function Phone (props) {
   const numbers = props.phone

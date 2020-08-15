@@ -1,16 +1,16 @@
+// Sass
 @import "sass/variables";
 @import "sass/mixins";
-@import "animations";
-@import "views/contacts";
-@import "views/favourites";
-@import "views/groups";
-@import "views/settings";
-@import "views/contactcard";
-@import "views/edit";
 
-html,
-body,
-#root {
+// Animations
+//@import "animations";
+
+// Components
+//@import "views/edit"; // THIS NEEDS TO GO EVENTUALLY
+@import "components";
+
+
+html, body, #root {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -25,67 +25,7 @@ body,
   ::-webkit-scrollbar { display: none; }
 }
 
-.page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: 5px auto;
-  background: $bg1;
-  display: grid;
-  grid-template: 1fr / 180px 1fr;
-  border-radius: 0.5rem;
-  max-width: 980px;
-}
 
-.navbar {
-  padding-top: 1rem;
-  a {
-    color: inherit;
-    text-decoration: none;
-    list-style: none;
-    font-size: 1.3rem;
-    text-transform: capitalize;
-    cursor: pointer;
-  }
-  .active {
-    li, ion-icon {
-      color: $active;
-    }
-  }
-}
-
-.navItem {
-  outline: none;
-  display: flex;
-  margin: 5px;
-  &:active { transform: translateY(2px); }
-  div { margin: 0 5px; }
-  li {
-    list-style: none;
-    text-transform: capitalize;
-  }
-  ion-icon { font-size: 1.5rem; }
-}
-
-.content {
-  background: $bg2;
-  overflow: hidden;
-  border-radius: 0.5rem;
-}
-
-.view {
-  height: 100%;
-  display: grid;
-  grid-template: 1fr / 240px 1fr;
-}
-
-.output {
-  position: relative;
-  overflow: hidden scroll;
-  border-radius: 0 0.5rem 0.5rem 0;
-}
 
 .add {
   position: relative;
@@ -95,78 +35,78 @@ body,
   border-radius: 0.25rem;
 }
 
-@media only screen and (min-width: 980px) {
-  .page {
-    grid-template: 1fr / 180px 1fr;
-  }
-  .content {
-    position: relative;
-    // right: 10px;
-  }
-}
-
-
-
-@media only screen and (max-width: 768px) {
-  .page {
-    height: 100%;
-    margin: auto;
-    border-radius: 0;
-    grid-template: 40px 1fr / 1fr;
-  }
-
-  .navbar {
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 3px solid $faint;
-  }
-
-  .content,
-  .output {
-    border-radius: 0;
-  }
-}
-
-@media only screen and (max-width: 559px) {
-  .page { grid-template: 1fr 45px / 1fr; }
-
-  .view {
-    // display: block;
-    grid-template: 1fr / 1fr;
-    height: 100%;
-  }
-  .navbar {
-    grid-row: 2 / 3;
-    border: none;
-    border-top: 2px solid $faint;
-  }
-
-  .navItem {
-    flex-direction: column;
-    text-align: center;
-    height: 100%;
-    margin: 0;
-    .navIcon {
-      height: 2rem;
-      ion-icon {
-        font-size: 1.7rem;
-      }
-    }
-    .navHeading {
-      font-size: 0.7rem;
-      line-height: 1;
-    }
-  }
-}
-
-.tippy-content {
-  font-family: $family;
-  color: $highlights;
-  font-size: 0.8rem
-}
-
-
+//@media only screen and (min-width: 980px) {
+//  .page {
+//    grid-template: 1fr / 180px 1fr;
+//  }
+//  .content {
+//    position: relative;
+//    // right: 10px;
+//  }
+//}
+//
+//
+//
+//@media only screen and (max-width: 768px) {
+//  .page {
+//    height: 100%;
+//    margin: auto;
+//    border-radius: 0;
+//    grid-template: 40px 1fr / 1fr;
+//  }
+//
+//  .navbar {
+//    padding: 0;
+//    display: flex;
+//    justify-content: space-around;
+//    border-bottom: 3px solid $faint;
+//  }
+//
+//  .content,
+//  .mainPanel {
+//    border-radius: 0;
+//  }
+//}
+//
+//@media only screen and (max-width: 559px) {
+//  .page { grid-template: 1fr 45px / 1fr; }
+//
+//  .view {
+//    // display: block;
+//    grid-template: 1fr / 1fr;
+//    height: 100%;
+//  }
+//  .navbar {
+//    grid-row: 2 / 3;
+//    border: none;
+//    border-top: 2px solid $faint;
+//  }
+//
+//  .navItem {
+//    flex-direction: column;
+//    text-align: center;
+//    height: 100%;
+//    margin: 0;
+//    .navIcon {
+//      height: 2rem;
+//      ion-icon {
+//        font-size: 1.7rem;
+//      }
+//    }
+//    .navHeading {
+//      font-size: 0.7rem;
+//      line-height: 1;
+//    }
+//  }
+//}
+//
+//.tippy-content {
+//  font-family: $family;
+//  color: $highlights;
+//  font-size: 0.8rem
+//}
+//
+//
 [class|='btn'] {
   padding: 0;
   cursor: pointer;

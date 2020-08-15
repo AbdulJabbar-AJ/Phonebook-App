@@ -1,19 +1,9 @@
-.contactsPanel {
-  display: grid;
-  grid-template: auto 1fr / 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  border-right: 1px solid $highlights;
-  border-radius: 0.5rem 0 0 0.5rem;
-  .heading {
-    @include mainHeading;
-  }
 
-  .add {
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
+
+.add {
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .searchbarContainer {
@@ -98,5 +88,5 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .contactsPanel { border-radius: 0; }
+  .sidePanel { border-radius: 0; }
 }

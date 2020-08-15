@@ -1,0 +1,25 @@
+@import "contacts/contacts";
+@import "favourites/favourites";
+@import "groups/groups";
+@import "settings/settings";
+
+
+.view {
+  height: 100%;
+  display: grid;
+  grid-template: 1fr / 240px 1fr;
+}
+
+.mainPanel {
+  //position: relative;
+  overflow: hidden scroll;
+}
+
+
+.sidePanel {
+  display: grid;
+  grid-template: auto 1fr / 100%;
+  overflow: hidden scroll;
+  border-right: 1px solid $highlights;
+  .heading { @include mainHeading; }
+}

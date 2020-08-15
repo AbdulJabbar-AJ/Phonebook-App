@@ -3,7 +3,7 @@ import tippy from 'tippy.js'
 import Settings from '../../scripts/components/views/settings'
 
 
-export default function tippyScripts () {
+export default function tippyScript () {
   const fav = document.querySelector('img.btn-fav')
   tippy(fav, {
     content: 'Add/Remove   Favourite',

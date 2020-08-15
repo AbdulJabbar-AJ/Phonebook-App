@@ -1,4 +1,4 @@
-import contacts, { Contact } from '../initdata'
+import contacts, { Contact } from '../../../SS/initdata'
 
 const initState = {
   contacts: [...contacts],
