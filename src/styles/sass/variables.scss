@@ -1,4 +1,4 @@
-// // COLOURS
+// Colours
 $bg1: rgba(#e7dad5, 0.9);
 $bg2: #ffff;
 $bg3: #eee;
@@ -15,10 +15,14 @@ $faint: rgba(0, 0, 0, 0.2);
 $active: #0160c7;
 $active2: #b04949;
 
-// FONT
-$family: Roboto, arial, sans-serif;
 
 // Sizing
-$smBtn: 16px;
-$btnSize: 22px;
-$priOfsett: 30px;
+$rem: 16px;
+$borderRadius: 10px;
+$globalPadding: 10px;
+$wide: 980px;
+$navIconSize: 28px;
+$fullPanelHeadingHeight: 50px;
+$medNavHeight: 40px;
+$smallNavHeight: 48px;
+$fullPanelHeadingHeight: 40px;

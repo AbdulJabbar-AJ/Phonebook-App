@@ -1,15 +1,22 @@
 import React from 'react'
 
-export default function View ({classname, heading, sidePanel, mainPanel}) {
-	return (
-		<div className={`view ${classname}`}>
-			<div className='sidePanel'>{heading}{sidePanel}</div>
-			<div className='mainPanel'>{mainPanel}</div>
-		</div>
-	)
+// Pass either:
+// splitView: true, panels {side: element, main: element}
+// splitView: false, panels: {full: element}
+
+export default function View ({classname, heading, splitView, panels}) {
+	if (splitView) {
+		return (
+			<div className={`view splitView ${classname}`}>
+				<div className='sidePanelContainer'>{heading}{panels.side}</div>
+				<div className='mainPanelContainer'>{panels.main}</div>
+			</div>
+		)
+	} else {
+		return (
+			<div className={`view fullView ${classname}`}>
+				<div className='fullPanelContainer'>{heading}{panels.full}</div>
+			</div>
+		)
+	}
 }
-
-
-// TODO
-// For groups, the heading will need to span the entire width?
-// Or maybe I can just have a side panel with list of groups? not much variance though from other screens, looks like less work

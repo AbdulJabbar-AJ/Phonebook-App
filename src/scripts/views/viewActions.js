@@ -1,0 +1,1 @@
+// set global variable of width here

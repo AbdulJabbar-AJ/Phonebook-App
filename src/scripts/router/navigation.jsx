@@ -1,43 +1,31 @@
-import React, {useState} from 'react'
-import { Router , Link } from '@reach/router'
-import NavItem from './components/navItem'
-import Contacts from '../views/contacts/contacts'
-import Favourites from '../views/favourites/favourites'
-import Groups from '../views/groups/groups'
-import Settings from '../views/settings/settings'
-import Tippy from '@tippy.js/react'
-
-// Settings tooltip
-// TODO
-// Extract out
-const SettingsTooltip = () => (
-	<a><Tippy content={<Settings />} arrow arrowType='round' animation='fade' interactive trigger='click' >
-		<div className='navItem settings'>
-			<div className='navIcon'><ion-icon name='ios-switch' /></div>
-			<div className='navHeading'><li>settings</li></div>
-		</div>
-	</Tippy></a>
-)
+import React from 'react'
+import { Router } from '@reach/router'
+import NavItem from './navItem'
+import Contacts from '../views/contactsView'
+import Favourites from '../views/favouritesView'
+import Groups from '../views/groupsView'
+import contactsIcon from '../../media/icons/person-circle-outline.svg'
+import favouritesIcon from '../../media/icons/star-outline.svg'
+import groupsIcon from '../../media/icons/people-circle-outline.svg'
+import settingsIcon from '../../media/icons/settings.svg'
 
 
-// Navbar & Router
+
 const Page = () => (
 	<div className="page">
 		<div className="navbar">
-			<NavItem to='/' name='contacts' icon='person'/>
-			{/*<NavItem to='/favourites' name='favourites' icon='star-outline'/>*/}
-			{/*<NavItem to='/groups' name='groups' icon='people'/>*/}
-			{/*<SettingsTooltip />*/}
-
+			<NavItem to='/' name='contacts' icon={contactsIcon}/>
+			<NavItem to='/favourites' name='favourites' icon={favouritesIcon}/>
+			<NavItem to='/groups' name='groups' icon={groupsIcon}/>
+			<NavItem to='/settings' name='settings' icon={settingsIcon}/>
 		</div>
 
-		<Router className='viewContainer'>
+		<Router className="viewContainer">
 			<Contacts path='/'/>
-			{/*<Favourites path='/favourites'/>*/}
-			{/*<Groups path='/groups'/>*/}
+			<Favourites path='/favourites'/>
+			<Groups path='/groups'/>
 		</Router>
 	</div>
 )
-
 
 export default Page

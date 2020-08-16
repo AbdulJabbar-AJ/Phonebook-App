@@ -2,11 +2,10 @@
 @import "sass/variables";
 @import "sass/mixins";
 
-// Animations
-//@import "animations";
+// Fonts
+@import "fonts";
 
 // Components
-//@import "views/edit"; // THIS NEEDS TO GO EVENTUALLY
 @import "components";
 
 
@@ -15,121 +14,41 @@ html, body, #root {
   width: 100%;
   margin: 0;
   overflow: hidden;
-}
+  font-family: montserrat, arial, sans-serif;
+  font-weight: 400;
+ }
 
 #root {
-  background: url('../media/img/desk.jpg') no-repeat;
+  background: url("../media/images/background.jpg") no-repeat;
   background-size: cover;
-  font-family: $family;
-  font-weight: 300;
   ::-webkit-scrollbar { display: none; }
 }
 
-
-
-.add {
-  position: relative;
-  width: $btnSize;
-  height: $btnSize;
-  background: $bg1;
-  border-radius: 0.25rem;
+.page {
+  height: calc(100vh - #{2 * $globalPadding});
+  max-width: $wide;
+  margin: $globalPadding auto;
+  display: grid;
+  overflow: hidden;
+  border-radius: $borderRadius;
+  box-sizing: border-box;
+  background-color: $bg1;
 }
 
-//@media only screen and (min-width: 980px) {
-//  .page {
-//    grid-template: 1fr / 180px 1fr;
-//  }
-//  .content {
-//    position: relative;
-//    // right: 10px;
-//  }
-//}
-//
-//
-//
-//@media only screen and (max-width: 768px) {
-//  .page {
-//    height: 100%;
-//    margin: auto;
-//    border-radius: 0;
-//    grid-template: 40px 1fr / 1fr;
-//  }
-//
-//  .navbar {
-//    padding: 0;
-//    display: flex;
-//    justify-content: space-around;
-//    border-bottom: 3px solid $faint;
-//  }
-//
-//  .content,
-//  .mainPanel {
-//    border-radius: 0;
-//  }
-//}
-//
-//@media only screen and (max-width: 559px) {
-//  .page { grid-template: 1fr 45px / 1fr; }
-//
-//  .view {
-//    // display: block;
-//    grid-template: 1fr / 1fr;
-//    height: 100%;
-//  }
-//  .navbar {
-//    grid-row: 2 / 3;
-//    border: none;
-//    border-top: 2px solid $faint;
-//  }
-//
-//  .navItem {
-//    flex-direction: column;
-//    text-align: center;
-//    height: 100%;
-//    margin: 0;
-//    .navIcon {
-//      height: 2rem;
-//      ion-icon {
-//        font-size: 1.7rem;
-//      }
-//    }
-//    .navHeading {
-//      font-size: 0.7rem;
-//      line-height: 1;
-//    }
-//  }
-//}
-//
-//.tippy-content {
-//  font-family: $family;
-//  color: $highlights;
-//  font-size: 0.8rem
-//}
-//
-//
-[class|='btn'] {
-  padding: 0;
-  cursor: pointer;
-  width: $btnSize;
-  height: $btnSize;
-  outline: none;
-  &:active {
-    transform: translateY(2px);
-  }
-  &.btn-editBtn {
-    width: 100px;
-    height: auto;
-    margin: 5px auto;
-    bottom: 0;
+
+@media only screen and (min-width: 769px) {
+  .page { grid-template: 1fr / 200px 1fr; }
+}
+
+@media only screen and (max-width: 768px) {
+  .page {
+    grid-template: $medNavHeight 1fr / 1fr;
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
   }
 }
 
-button {
-  background: $bg1;
-  border: 1px solid lightgrey;
-  border-radius: 0.25rem;
-  margin: auto 5px;
-  ion-icon {
-    padding-top: 6px;
-  }
+@media only screen and (max-width: 559px) {
+  .page { grid-template: 1fr #{$smallNavHeight} / 1fr; };
 }

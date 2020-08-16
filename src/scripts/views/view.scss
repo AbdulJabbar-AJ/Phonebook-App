@@ -1,25 +1,78 @@
-@import "contacts/contacts";
-@import "favourites/favourites";
-@import "groups/groups";
-@import "settings/settings";
+.viewContainer {
+  overflow: hidden;
+  background-color: $bg2;
+  border-radius: 0 $borderRadius $borderRadius 0;
+
+  .view {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: grid;
+    &.splitView { grid-template: 1fr / 240px 1fr; }
+    &.fullView {
+      //border: 5px solid purple;
+      box-sizing: border-box;
+      grid-template: $fullPanelHeadingHeight 1fr / 1fr;
+    }
+  }
+
+  .mainPanelContainer, .sidePanelContainer {
+    height: calc(100vh - #{2 * $globalPadding});
+    //border: 5px solid orange;
+    box-sizing: border-box;
+
+    .sidePanel {
+      @include viewPanels;
+      //border: 2px solid green;
+      &-heading {
+        //border: 2px solid blue;
+      }
+    }
+
+    .mainPanel {
+      // Must be at least 320px at all times
+      @include viewPanels;
+      //border: 2px solid red;
+    }
+  }
+
+  .sidePanelContainer {
+    display: flex;
+    flex-direction: column;
+  }
 
 
-.view {
-  height: 100%;
-  display: grid;
-  grid-template: 1fr / 240px 1fr;
+  .fullPanelContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - #{2 * $globalPadding});
+    .fullPanel {
+      @include viewPanels;
+      //border: 2px solid deeppink;
+      &-heading {
+        @include viewPanels;
+        height: $fullPanelHeadingHeight;
+        overflow: hidden;
+        //border: 2px solid green;
+      }
+    }
+  }
 }
 
-.mainPanel {
-  //position: relative;
-  overflow: hidden scroll;
+
+@media only screen and (min-width: 769px) {
 }
 
+@media only screen and (max-width: 768px) {
+  .viewContainer {
+    border-radius: 0;
+    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer { height: calc(100vh - #{$medNavHeight}); }
+    }
+}
 
-.sidePanel {
-  display: grid;
-  grid-template: auto 1fr / 100%;
-  overflow: hidden scroll;
-  border-right: 1px solid $highlights;
-  .heading { @include mainHeading; }
+@media only screen and (max-width: 559px) {
+  .viewContainer {
+    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer { height: calc(100vh - #{$smallNavHeight}); }
+  }
 }
