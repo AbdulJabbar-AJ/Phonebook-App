@@ -1,10 +1,10 @@
 import React from 'react'
-import View from './view'
+import View from '../view'
 
 const FavouritesView = () => {
 	const heading = (() => (
 		<div className='sidePanel-heading'>
-			Favourites
+			<div className='heading'>Favourites</div>
 		</div>
 	))()
 

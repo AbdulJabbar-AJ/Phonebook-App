@@ -1,0 +1,62 @@
+.cardSectionContainer {
+  &:not(:last-child) {
+    border-bottom: 1px solid $faint;
+  }
+}
+
+.cardSection {
+  padding: 0.5rem 5px 2rem;
+
+  .heading {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+  }
+
+  .entry {
+    display: flex;
+    margin: 0 10px;
+    padding: 0.5rem 0 0.5rem 1rem;
+    &:not(:last-child) { border-bottom: 1px solid $veryFaint; }
+  }
+
+  .type {
+    flex-basis: 70px;
+    min-width: 70px;
+    font-size: 0.8rem;
+    margin-right: 10px;
+  }
+
+  .data {
+    font-size: 0.9rem;
+    flex-grow: 1;
+    margin-right: 10px;
+    overflow-x: scroll;
+  }
+
+  .primary {
+    margin-left: auto;
+    margin-right: $primaryOffset;
+    font-size: 0.8rem;
+    color: $dark2;
+  }
+
+  .note {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    line-height: 1.5;
+  }
+
+  &.address .entry {
+    flex-wrap: wrap;
+    .data {
+      flex-grow: 0;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+      div {
+        overflow-x: scroll;
+      }
+    }
+    img[id^='googleMaps'] { border-radius: 0.25rem; }
+  }
+}

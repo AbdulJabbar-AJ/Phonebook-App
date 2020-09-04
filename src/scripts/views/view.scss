@@ -1,7 +1,7 @@
 .viewContainer {
   overflow: hidden;
   background-color: $bg2;
-  border-radius: 0 $borderRadius $borderRadius 0;
+  border-radius: $borderRadius;
 
   .view {
     height: 100%;
@@ -10,7 +10,6 @@
     display: grid;
     &.splitView { grid-template: 1fr / 240px 1fr; }
     &.fullView {
-      //border: 5px solid purple;
       box-sizing: border-box;
       grid-template: $fullPanelHeadingHeight 1fr / 1fr;
     }
@@ -18,21 +17,32 @@
 
   .mainPanelContainer, .sidePanelContainer {
     height: calc(100vh - #{2 * $globalPadding});
-    //border: 5px solid orange;
     box-sizing: border-box;
 
     .sidePanel {
       @include viewPanels;
-      //border: 2px solid green;
+      border-right: 2px solid $bg3;
       &-heading {
-        //border: 2px solid blue;
+        background-color: $bg3;
+        padding: 2px 4px;
+        .heading {
+          font-size: 1.5rem;
+          padding: 5px 2px;
+        }
+
+        &.contactsView-sidePanelHeading {
+          display: grid;
+          grid-template: 1fr / 1fr $btn-size;
+          padding-bottom: 5px;
+          .heading {}
+          .addContact-btn img { transform: rotateZ(45deg);}
+        }
       }
     }
 
     .mainPanel {
       // Must be at least 320px at all times
       @include viewPanels;
-      //border: 2px solid red;
     }
   }
 
@@ -49,12 +59,10 @@
     height: calc(100vh - #{2 * $globalPadding});
     .fullPanel {
       @include viewPanels;
-      //border: 2px solid deeppink;
       &-heading {
         @include viewPanels;
         height: $fullPanelHeadingHeight;
         overflow: hidden;
-        //border: 2px solid green;
       }
     }
   }
