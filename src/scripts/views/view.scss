@@ -69,6 +69,29 @@
   }
 }
 
+.settingsView {
+  .settingDiv { margin: 20px 10px; }
+  .setting {
+    display: inline-block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    width: 100%;
+    color: $dark;
+    border-bottom: 1px solid $dark;
+  }
+  .options {display: flex}
+  .toggle {
+    margin: 0 10px;
+    height: 1.7rem;
+    width: 1.7rem;
+    img {
+      padding: 0;
+      transform: translateY(-4px);
+    }
+  }
+}
+
+
 
 @media only screen and (min-width: 769px) {
 }

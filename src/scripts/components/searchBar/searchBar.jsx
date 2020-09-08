@@ -10,7 +10,6 @@ function SearchBar ({submitSearchQuery}) {
 		submitSearchQuery(searchTerms)
 	}
 
-
 	return (
 		<div className='searchBar'>
 			<img src={search} alt=""/>
@@ -19,11 +18,6 @@ function SearchBar ({submitSearchQuery}) {
 	)
 }
 
-
 const mapStateToProps = () => ({})
-
-const mapDispatchToProps = {
-	submitSearchQuery
-}
-
+const mapDispatchToProps = { submitSearchQuery }
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar)

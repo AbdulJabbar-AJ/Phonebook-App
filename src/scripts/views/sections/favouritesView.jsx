@@ -18,7 +18,7 @@ const FavouritesView = ({contacts, favourites, activeFavourite}) => {
 	const side = <div className='sidePanel'><FavouritesList /></div>
 	const main = <div className='mainPanel'><ContactCard {...{contact, showContactCallback: showFavourite}}/></div>
 
-	return <View classname='contactsView' heading={heading} splitView={true} panels={{side, main}}/>
+	return <View classname='favouritesView' heading={heading} splitView={true} panels={{side, main}}/>
 }
 
 // con, type, favs, favourite, rmFav, activeFav, activeContact, activeGroupMem,

@@ -16,12 +16,36 @@ import trash from '../../../media/icons/trash.svg'
 // import back from '../../../media/img/icons/back.svg'
 
 // NEED TO SCROLL TO TOP OF CONTACT WHEN SWITCHING BETWEEN CONTACTS
-function ContactCard({contact, favourites, addFavourite, removeFavourite, showContactCallback, updateContact, deleteContact}) {
+
+function ContactCard({contact, favourites, addFavourite, removeFavourite, showContactCallback, updateContact, deleteContact, newContact, newId, closeNewContact}) {
 	const initialDetails = deepCloneObject(contact)
 	const [editMode, setEditMode] = useState(false)
 	const [contactDetails, setContactDetails] = useState(initialDetails)
 
-	useEffect(() => setContactDetails(deepCloneObject(contact)), [contact])
+
+	useEffect(() => {
+		setContactDetails(deepCloneObject(contact))
+		setEditMode(false)
+	}, [contact])
+
+	// useEffect(() => {
+	// 	const abc = {
+	// 		id: newId,
+	// 		name: {first: '', last: ''},
+	// 		phone: [],
+	// 		email: [],
+	// 		address: [],
+	// 		dates: [],
+	// 		other: [],
+	// 		notes: ''
+	// 	}
+	//
+	// 	if (newContact) {
+	// 		setContactDetails(deepCloneObject(abc))
+	// 		setEditMode(true)
+	// 	}
+	//
+	// }, [newContact])
 
 	const onChangeCallback = (section, data) => setContactDetails(prevState => ({ ...prevState, [section]: data }))
 	const flipEditMode = () => setEditMode(!editMode)
@@ -116,13 +140,13 @@ function ContactCard({contact, favourites, addFavourite, removeFavourite, showCo
 	const last = contact.name.last
 
 	// This must come from the contact and not contactDetails because I don't want it to change until changes have been submitted
-	const title = (() => (
+	const title = (
 		<div className='title'>
 			{/*{closeBtn}*/}
 			{first || last ? <div className='fullName'>{contact.name.prefix} {first} {last}</div> : null}
 			<div className='company'>{contact.name.company}</div>
 		</div>
-	))()
+	)
 
 	// const title = first || name ? (
 	// 	<div className='title'>

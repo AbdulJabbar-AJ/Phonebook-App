@@ -4,12 +4,8 @@ import { ReactSVG } from 'react-svg'
 import classNames from 'classnames'
 
 // NOTE, the getProps is a Reach Router thing
-const NavItem = ({ to, name, icon }) => {
-	const isActive = ({isCurrent}) => {
-		return isCurrent
-			? { className: classNames('navItem', name, 'active')}
-			: {className: classNames('navItem', name)}
-	}
+const NavItem = ({to, name, icon}) => {
+	const isActive = ({isCurrent}) => ({ className: classNames('navItem', name, {active: isCurrent}) })
 
 	return (
 		<Link to={to} getProps={isActive}>

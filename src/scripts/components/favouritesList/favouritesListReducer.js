@@ -1,6 +1,6 @@
 const initState = {
 	activeFavourite: 3,
-	favourites: [3, 4, 5]
+	favourites: [3, 4, 5, 6, 7, 8, 9]
 }
 
 export default function contactsListReducer(state = initState, action) {
@@ -8,12 +8,12 @@ export default function contactsListReducer(state = initState, action) {
 		case 'ADD_FAVOURITE':
 			return {
 				...state,
-				favourites: [...state.favs, action.id]
+				favourites: [...state.favourites, action.id]
 			}
 		case 'REMOVE_FAVOURITE':
 			return {
 				...state,
-				favourites: state.favs.filter(id => id !== action.id)
+				favourites: state.favourites.filter(id => id !== action.id)
 			}
 		case 'SHOW_FAVOURITE':
 			return {
