@@ -1,0 +1,54 @@
+// Sass
+@import "sass/variables";
+@import "sass/mixins";
+
+// Fonts
+@import "fonts";
+
+// Components
+@import "components";
+
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: montserrat, arial, sans-serif;
+  font-weight: 400;
+ }
+
+#root {
+  background: url("../media/images/background.jpg") no-repeat;
+  background-size: cover;
+  ::-webkit-scrollbar { display: none; }
+}
+
+.page {
+  height: calc(100vh - #{2 * $globalPadding});
+  max-width: $wide;
+  margin: $globalPadding auto;
+  display: grid;
+  overflow: hidden;
+  border-radius: $borderRadius;
+  box-sizing: border-box;
+  background-color: $bg1;
+}
+
+
+@media only screen and (min-width: 769px) {
+  .page { grid-template: 1fr / 200px 1fr; }
+}
+
+@media only screen and (max-width: 768px) {
+  .page {
+    grid-template: $medNavHeight 1fr / 1fr;
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+@media only screen and (max-width: 559px) {
+  .page { grid-template: 1fr #{$smallNavHeight} / 1fr; };
+}

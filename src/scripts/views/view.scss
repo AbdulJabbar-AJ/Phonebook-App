@@ -1,0 +1,110 @@
+.viewContainer {
+  overflow: hidden;
+  background-color: $bg2;
+  border-radius: $borderRadius;
+
+  .view {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: grid;
+    &.splitView { grid-template: 1fr / 240px 1fr; }
+    &.fullView {
+      box-sizing: border-box;
+      grid-template: $fullPanelHeadingHeight 1fr / 1fr;
+    }
+  }
+
+  .mainPanelContainer, .sidePanelContainer {
+    height: calc(100vh - #{2 * $globalPadding});
+    box-sizing: border-box;
+
+    .sidePanel {
+      @include viewPanels;
+      &-heading {
+        background-color: $bg3;
+        padding: 2px 4px;
+        border-bottom: 1px solid $highlights;
+        .heading {
+          font-size: 1.5rem;
+          padding: 5px 2px;
+        }
+
+        &.contactsView-sidePanelHeading {
+          display: grid;
+          grid-template: 1fr / 1fr $btn-size;
+          padding-bottom: 5px;
+          .heading {}
+          .addContact-btn img { transform: rotateZ(45deg);}
+        }
+      }
+    }
+
+    .mainPanel {
+      // Must be at least 320px at all times
+      @include viewPanels;
+    }
+  }
+
+  .sidePanelContainer {
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid $highlights;
+  }
+
+
+  .fullPanelContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - #{2 * $globalPadding});
+    .fullPanel {
+      @include viewPanels;
+      &-heading {
+        @include viewPanels;
+        height: $fullPanelHeadingHeight;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.settingsView {
+  .settingDiv { margin: 20px 10px; }
+  .setting {
+    display: inline-block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    width: 100%;
+    color: $dark;
+    border-bottom: 1px solid $dark;
+  }
+  .options {display: flex}
+  .toggle {
+    margin: 0 10px;
+    height: 1.7rem;
+    width: 1.7rem;
+    img {
+      padding: 0;
+      transform: translateY(-4px);
+    }
+  }
+}
+
+
+
+@media only screen and (min-width: 769px) {
+}
+
+@media only screen and (max-width: 768px) {
+  .viewContainer {
+    border-radius: 0;
+    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer { height: calc(100vh - #{$medNavHeight}); }
+    }
+}
+
+@media only screen and (max-width: 559px) {
+  .viewContainer {
+    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer { height: calc(100vh - #{$smallNavHeight}); }
+  }
+}

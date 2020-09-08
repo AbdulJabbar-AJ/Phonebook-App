@@ -1,24 +1,37 @@
-// // COLOURS
+// Colours
 $bg1: rgba(#e7dad5, 0.9);
 $bg2: #ffff;
 $bg3: #eee;
+
 $highlights: #dcdcdc;
 $highlights2: #0160c7;
 
-$red: #ff6159 ;
+$red: #ff6159;
 $green: #5dbb8b;
 
 $dark: #757575;
 $dark2: #999;
-$veryFaint: rgba(0, 0, 0, 0.05);
+
 $faint: rgba(0, 0, 0, 0.2);
+$medFaint: rgba(0, 0, 0, 0.1);
+$veryFaint: rgba(0, 0, 0, 0.05);
+
 $active: #0160c7;
 $active2: #b04949;
 
-// FONT
-$family: Roboto, arial, sans-serif;
 
 // Sizing
-$smBtn: 16px;
-$btnSize: 22px;
-$priOfsett: 30px;
+// This needs urgent ordering
+$rem: 16px;
+$borderRadius: 10px;
+$globalPadding: 10px;
+$wide: 980px;
+$navIconSize: 28px;
+$fullPanelHeadingHeight: 50px;
+$medNavHeight: 40px;
+$smallNavHeight: 48px;
+$fullPanelHeadingHeight: 40px;
+$btn-size: 22px;
+$sml-btn: 16px;
+$primaryOffset: 30px; // Pri??
+

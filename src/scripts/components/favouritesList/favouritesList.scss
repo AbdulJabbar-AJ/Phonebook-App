@@ -1,0 +1,27 @@
+.favouritesView {
+  .favContact {
+    display: flex;
+    margin: 0 5px;
+    padding: 0;
+
+    .name {
+      padding: 0;
+      margin: 0 0 0 10px;
+    }
+
+    .editFavs {
+      margin: auto 0;
+    }
+
+    .active li.name {
+      @include active;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $medFaint;
+    }
+  }
+  .btn-editFavs {
+    margin: 10px auto;
+  }
+}

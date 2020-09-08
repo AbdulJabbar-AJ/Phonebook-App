@@ -1,0 +1,33 @@
+.btn {
+  width: $btn-size;
+  height: $btn-size;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: $bg1;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin: auto;
+  &.noBg { background-color: inherit; }
+  &:not(&.toggleBtn):active { transform: translateY(1px); }
+
+
+  // MIGHT NEED BUTTONGS TO BE SPECIFIC WIDTH SOMETIMES,
+  &.textBtn {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    width: min-content;
+    height: calc(1rem + 4px);
+    padding: 2px 5px;
+    margin: 2px;
+    &.medium { padding: 2px 20px; }
+    &.wide { padding: 2px 40px; }
+  }
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    vertical-align: center;
+  }
+}
