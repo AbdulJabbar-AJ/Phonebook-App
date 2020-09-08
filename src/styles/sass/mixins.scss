@@ -5,3 +5,8 @@
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+@mixin active {
+  color: $active;
+  font-weight: 400;
+}

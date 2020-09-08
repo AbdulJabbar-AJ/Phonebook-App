@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Link } from '@reach/router'
 import { ReactSVG } from 'react-svg'
 import classNames from 'classnames'
 
+// NOTE, the getProps is a Reach Router thing
 const NavItem = ({ to, name, icon }) => {
 	const isActive = ({isCurrent}) => {
 		return isCurrent
@@ -19,7 +20,3 @@ const NavItem = ({ to, name, icon }) => {
 }
 
 export default NavItem
-
-// NOTE, the getProps is a Reach Router thing
-
-

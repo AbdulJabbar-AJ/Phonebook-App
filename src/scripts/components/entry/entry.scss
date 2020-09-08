@@ -1,0 +1,120 @@
+.cardSection {
+  .entry { padding: 0.5rem 0 0.5rem 0; }
+
+  .removeEntry {
+    margin: auto;
+    margin-right: 1rem;
+    min-width: $sml-btn;
+  }
+
+  .addEntry {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    margin-right: auto;
+    left: 13px;
+    top: 1rem;
+    height: $sml-btn;
+    width: $sml-btn;
+    background: $green;
+    cursor: pointer;
+    img { padding: 0; }
+  }
+
+  select {
+    height: 1.6rem;
+    background: $bg1;
+    border: none;
+    outline: none;
+    padding: 5px;
+    cursor: context-menu;
+  }
+
+  input:not([type="radio"]) {
+    background: $veryFaint;
+    height: 1.2rem;
+    min-width: 100px;
+    border: none;
+    outline: none;
+    border-radius: 0.25rem;
+    padding: 0.2rem;
+    margin-right: $primaryOffset;
+    font-size: 0.8rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    &::-webkit-inner-spin-button { -webkit-appearance: none; }
+  }
+
+
+  &.phone,
+  &.email {
+    .heading {
+      display: flex;
+      small {
+        position: relative;
+        font-size: 0.8rem;
+        margin-left: auto;
+        margin-top: auto;
+        right: $primaryOffset;
+        color: $dark2;
+      }
+    }
+  }
+
+  &.address {
+    .entry {
+      display: grid;
+      grid-template: 1.6rem auto / 70px 1fr;
+      grid-column-gap: 10px;
+    }
+    input {
+      margin: 0 0 5px 0;
+      width: 100%;
+    }
+    select { width: 70px; }
+    .data { grid-row: span 2; }
+    .addEntry { left: 37px; }
+    .removeEntry { margin: auto; }
+  }
+
+  &.dates .data select {
+    font-size: 0.7rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  input[type='radio'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+    width: $sml-btn;
+    height: $sml-btn;
+    background: $bg1;
+    transition: 0.2s all linear;
+    outline: none;
+    position: relative;
+    min-width: $sml-btn;
+    cursor: pointer;
+
+    &:checked {
+      border: 2px solid $bg1;
+      background: $highlights2;
+    }
+  }
+
+  &.notes textarea {
+    background: $veryFaint;
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 5px;
+    width: calc(100% - 20px);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    resize: none;
+    margin-left: 5px;
+    margin-bottom: 1rem;
+  }
+}
+

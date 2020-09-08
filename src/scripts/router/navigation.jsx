@@ -9,8 +9,6 @@ import favouritesIcon from '../../media/icons/star-outline.svg'
 import groupsIcon from '../../media/icons/people-circle-outline.svg'
 import settingsIcon from '../../media/icons/settings.svg'
 
-
-
 const Page = () => (
 	<div className="page">
 		<div className="navbar">

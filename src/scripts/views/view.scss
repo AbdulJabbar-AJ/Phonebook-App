@@ -21,10 +21,10 @@
 
     .sidePanel {
       @include viewPanels;
-      border-right: 2px solid $bg3;
       &-heading {
         background-color: $bg3;
         padding: 2px 4px;
+        border-bottom: 1px solid $highlights;
         .heading {
           font-size: 1.5rem;
           padding: 5px 2px;
@@ -49,6 +49,7 @@
   .sidePanelContainer {
     display: flex;
     flex-direction: column;
+    border-right: 2px solid $highlights;
   }
 
 
