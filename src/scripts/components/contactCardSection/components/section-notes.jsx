@@ -14,8 +14,8 @@ export default function Notes ({data, editMode, onChangeCallback}) {
 	}
 
 	function resizeAndScroll(target) {
-		console.log('TODO, resize and scroll function')
-		console.log(target.scrollHeight)
+		// console.log('TODO, resize and scroll function')
+		// console.log(target.scrollHeight)
 
 
 		// target.style.height = 0

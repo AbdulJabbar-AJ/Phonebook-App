@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Entry from '../../entry/entry'
 import AddEntry from '../../addEntry/addEntry'
+import {other} from '../../../helpers/contacts'
 
 export default function Other ({data, editMode, onChangeCallback}) {
 	const [others, setOthers] = useState(data)
@@ -9,6 +10,7 @@ export default function Other ({data, editMode, onChangeCallback}) {
 	useEffect(() => onChangeCallback('other', others), [others])
 
 	const removeEntry = index => setOthers(prevState => prevState.filter((other, i) => index !== i))
+	const addNewEntry = () => setOthers(prevState => [...prevState, other])
 
 	function updateOthers(value, index, item) {
 		setOthers(prevState => {
@@ -18,15 +20,11 @@ export default function Other ({data, editMode, onChangeCallback}) {
 		})
 	}
 
-	function addNewEntry() {
-		const newDataSet = { data: '', type: 'other'}
-		setOthers(prevState => [...prevState, newDataSet])
-	}
 
-
-	// ALso handle for insta and linked in handles, and for in case they put in full url
+	// TODO - ALso handle for insta and linked in handles, and for in case they put in full url
 	function createLink (type, value) {
-		let link
+		console.log(value)
+		let link = ''
 		switch (type) {
 			case 'Twitter':
 				link = `http://twitter.com/${value}`
@@ -34,17 +32,46 @@ export default function Other ({data, editMode, onChangeCallback}) {
 			case 'Instagram':
 				link = `http://www.instagram.com/${value}`
 				break
-			default:
+			case 'website':
 				link = `${value}`
+				break
+			case 'LinkedIn':
+				link = ''
+				break
+			case 'other':
+				break
+			default:
+				break
 		}
 
 		if (!link.startsWith('http')) { link = `http://${link}` }
 		return <a href={link} target='_blank'>{value}</a>
 	}
 
+
+
+	function generatePlaceholder(type) {
+		switch (type) {
+			case 'Twitter':
+				return '@'
+			case 'Facebook':
+				return "/profile"
+			case 'Instagram':
+				return '@insta?'
+			case 'website':
+				return 'www.example.com'
+			case 'LinkedIn':
+				return '.....linkedin'
+			case 'other':
+				return ''
+		}
+	}
+
+
+
 	const mainInput = (i, other) => {
 		return editMode
-			? <input className='data' name='data' type='string' defaultValue={other.data} onKeyUp={(e) => updateOthers(e.target.value, i, 'data')} placeholder='Enter social media handle or URL'/>
+			? <input className='data' name='data' type='string' defaultValue={other.data} onKeyUp={(e) => updateOthers(e.target.value, i, 'data')} placeholder={generatePlaceholder(other.type)} />
 			: <div className='data'>{createLink(other.type, other.data)}</div>
 	}
 

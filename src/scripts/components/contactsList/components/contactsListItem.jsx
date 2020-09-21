@@ -10,7 +10,7 @@ function ContactListItem ({contact, isActive, displayBy, onClickCallback}) {
 
 	return (
 		<div className={classNames('contact', {active: isActive})} onClick={onClickCallback}>
-			<li className='name'>{first} {last} {company}</li>
+			<li className='name'>{first}{displayBy === 'last' && first && last ? ', ' : ' '}{last}{company}</li>
 		</div>
 	)
 }
@@ -18,6 +18,5 @@ function ContactListItem ({contact, isActive, displayBy, onClickCallback}) {
 const mapStateToProps = ({contactsList}) => ({
 	displayBy: contactsList.displayBy,
 })
-
 
 export default connect(mapStateToProps)(ContactListItem)

@@ -1,46 +1,14 @@
 import * as dummyData from './dummyData.json'
 const data = dummyData.data
-
-export class Contact {
-  constructor (id, name, phone, email, address, dates, other, notes) {
-	this.id = id
-    this.name = name
-    this.phone = phone
-    this.email = email
-    this.address = address
-    this.dates = dates
-    this.other = other
-    this.notes = notes
-  }
-}
-
-// // // FORMAT
-// const contact = {
-//   name: { prefix: '', first: '', last: '', company: '' },
-//   phone: [
-//     { number: '', type: '', primary: '' }
-//   ],
-//   email: [
-//     { address: '', type: '', primary: '' }
-//   ],
-//   address: [
-//     { type: '', line1: '', line2: '', city: '', county: '', postcode: '', country: '' }
-//   ],
-//   dates: [
-//     { type: '', date: ['dd', 'mmmm', 'yyyy'] }
-//   ],
-//   other: [
-//     { data: '', type: '' }
-//   ],
-//   notes: ''
-// }
+import Contact from '../helpers/contacts'
+import { v4 as uuidv4 } from 'uuid';
 
 let contacts = []
 let i = 1
 
 function addAllContacts () {
 	data.forEach(contact => {
-		const id = i
+		const id = uuidv4()
 
 		const name = {
 			first: contact.name.split(' ')[0],
@@ -96,14 +64,14 @@ function addAllContacts () {
 
 		const address = [
 			{type: 'home', line1, line2, city: cP[0], postcode, country},
-			{
-				type: 'work',
-				line1: 'Baa Baa Baa',
-				line2: 'Felonius Gru',
-				city: 'Minion',
-				postcode: '6RU M00n',
-				country: 'Illumination'
-			}
+			// {
+			// 	type: 'work',
+			// 	line1: 'Baa Baa Baa',
+			// 	line2: 'Felonius Gru',
+			// 	city: 'Minion',
+			// 	postcode: 'GR00',
+			// 	country: 'Illumination'
+			// }
 		]
 
 

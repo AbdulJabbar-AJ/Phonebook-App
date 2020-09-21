@@ -1,0 +1,193 @@
+// TODO -  Must put these styles in appropriate components
+
+.groupsView {
+  position: relative;
+  .groupsList {
+    height: 100%;
+    display: grid;
+    grid-template: 100% 100% / 1fr;
+    > div.transform { transform: translateY(-100%) }
+    .editGroups.transform { visibility: hidden }
+    &.slideUp > div { animation: 0.5s ease-in-out slideUp }
+    &.slideDown > div { animation: 0.5s ease-in-out reverse slideUp }
+
+    @keyframes slideUp {
+      from { transform: translateY(0) }
+      to { transform: translateY(-100%) }
+    }
+
+    &.blur {
+      .groupSummaries, .editGroups {
+        filter: blur(3px);
+      }
+    }
+
+    .groupSummaries {
+      height: calc(100% - 30px);
+      overflow-y: scroll;
+    }
+
+    .groupSummary {
+      display: grid;
+      grid-template: 28px 14px / 8fr 70px;
+      grid-gap: 5px;
+      margin: 0 10px;
+      padding: 10px 15px;
+      max-width: 100%;
+      cursor: pointer;
+      &:not(&:last-child) { border-bottom: 1px solid $faint; }
+
+      .groupName {
+        font-size: 1.3rem;
+        overflow-x: scroll;
+        white-space: nowrap;
+      }
+
+      .groupPreview {
+        font-size: 0.8rem;
+        margin-right: 10px;
+        overflow: scroll;
+        //text-overflow: ellipsis;
+        white-space: nowrap;
+        height: 16px;
+        .memberName {
+          margin: 0;
+          padding-right: 10px;
+        }
+      }
+
+
+
+      .groupSize {
+        grid-row: span 2;
+        align-self: center;
+      }
+    }
+    &:not(.edit) {
+      .groupSummary:hover { color: $highlights2; }
+    }
+
+    &.edit .groupSummary {
+      padding: 10px 15px 10px 0;
+      grid-template: 28px 14px / 2rem 8fr 70px;
+      cursor: default;
+
+      .removeEntry {
+        grid-row: span 2;
+        margin: auto;
+      }
+
+      .groupName {
+        background: $veryFaint;
+        font-weight: 300;
+        height: 1.2rem;
+        min-width: 100px;
+        border: none;
+        outline: none;
+        border-radius: 0.25rem;
+        padding: 0.2rem;
+        padding-left: 0.5rem;
+        margin-right: $primaryOffset;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &::-webkit-inner-spin-button { -webkit-appearance: none; }
+      }
+
+      .groupPreview {
+        font-size: 0.8rem;
+        overflow: visible;
+        .btn {
+          margin: 0 0 0 2px;
+          font-size: 0.7rem;
+          text-transform: none;
+        }
+      }
+    }
+
+    .editGroups {
+      width: 100%;
+      display: grid;
+      grid-template: 1fr / 22px 1fr;
+      position: absolute;
+      bottom: 0;
+      background: white;
+      height: 30px;
+      margin: 0 10px;
+      border-top: 1px solid $faint;
+      box-sizing: border-box;
+      .btn {margin: 5px auto}
+      .addBtn {
+        background: $green;
+        height: $sml-btn;
+        width: $sml-btn;
+        margin-left: 8px;
+      }
+      .editBtn {
+        position: relative;
+        right: 22px;
+        grid-column: 2 / 3;
+      }
+    }
+  }
+
+  .cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 4;
+  }
+
+  .chooseGroupMembers {
+    height: 100%;
+    display: grid;
+    grid-template: 80px 1fr / 1fr;
+    overflow: hidden;
+    .list { overflow: scroll }
+    .heading {
+      width: 100%;
+      background: $bg2;
+      box-sizing: border-box;
+      padding: 10px;
+      border-bottom: 1px solid $veryFaint;
+      display: grid;
+      grid-template: repeat(2, auto) / 1fr 70px;
+      .btn {
+        width: 56px;
+        align-self: center;
+      }
+    }
+    h3 {
+      font-weight: inherit;
+      font-size: 1.3rem;
+      margin: 5px 0;
+    }
+    p {
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    .list {
+      padding-left: 10px;
+    }
+    .addListCon {
+      display: flex;
+      width: max-content;
+      .contact {
+        cursor: pointer;
+        .name { margin-left: 0 }
+      }
+      .consListRadio {
+        grid-row: span 2;
+        width: $btn-size;
+        height: $btn-size;
+        margin: auto 0;
+        img {
+          width: $btn-size;
+          height: $btn-size;
+        }
+      }
+    }
+  }
+}

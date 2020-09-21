@@ -41,16 +41,10 @@
     color: $dark2;
   }
 
-  .note {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-  }
-
   &.name .type {
     flex-basis: 80px;
     min-width: 80px;
+    margin: auto 10px auto 0;
   }
 
   &.address .entry {
@@ -64,15 +58,39 @@
       grid-column: 1 / 2;
     }
     .data {
+      height: 100%;
       grid-row: 1 / -1;
       grid-column: 2 / -1;
       flex-grow: 0;
       margin-right: 1rem;
       margin-bottom: 1rem;
-      div {
-        overflow-x: scroll;
+      &:not(&.edit) {
+        display: grid;
+        grid-template: 1fr / 1fr 150px;
+        grid-gap: 5px;
+        .mapImage {
+          width: 150px;
+          height: 150px;
+        }
       }
     }
-    img[id^='googleMaps'] { border-radius: 0.25rem; }
+    img { border-radius: 0.25rem; }
+  }
+
+  &.dates .type {
+    flex-basis: 100px;
+    min-width: 100px;
+  }
+
+  &.other .type {
+    flex-basis: 90px;
+    min-width: 90px;
+  }
+
+  .note {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
   }
 }

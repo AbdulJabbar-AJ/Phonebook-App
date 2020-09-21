@@ -1,16 +1,25 @@
 import React, {useEffect, useState} from 'react'
 import Entry from '../../entry/entry'
 import AddEntry from '../../addEntry/addEntry'
+import { phone } from '../../../helpers/contacts'
 import validate from '../../../helpers/validate'
 
 export default function Phone ({data, editMode, onChangeCallback}) {
 	const [numbers, setNumbers] = useState(data)
 	const [primary, setPrimary] = useState(data.findIndex(number => number.primary === true))
 
-	useEffect(() => setNumbers(data), [data])
+	useEffect(() => {
+		// TODO
+		// SO HERE THE DATA IS UPDATING CORRECTLY, BUT THE NUMBERS ARE NOT BEING UPDATED IN TIME //
+		// console.log('CHANGED', numbers)
+		setNumbers(data)
+	}, [data])
+
+
 	useEffect(() => onChangeCallback('phone', numbers), [numbers])
 
 	const removeEntry = index => setNumbers(prevState => prevState.filter((number, i) => index !== i))
+	const addNewEntry = () => setNumbers(prevState => [...prevState, phone])
 
 	function updateNumbers(value, index, item) {
 		setNumbers(prevState => {
@@ -24,11 +33,6 @@ export default function Phone ({data, editMode, onChangeCallback}) {
 		updateNumbers(false, primary, 'primary')
 		setPrimary(index)
 		updateNumbers(true, index, 'primary')
-	}
-
-	function addNewEntry() {
-		const newDataSet = {type: 'home', number: '', primary: false}
-		setNumbers(prevState => [...prevState, newDataSet])
 	}
 
 	const mainInput = (i, number) => {

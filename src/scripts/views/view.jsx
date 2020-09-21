@@ -1,8 +1,7 @@
 import React from 'react'
 
-// Pass either:
 // splitView: true, panels {side: element, main: element}
-// splitView: false, panels: {full: element}
+// fullView: false, panels: {full: element}
 
 export default function View ({classname, heading, splitView, panels}) {
 	if (splitView) {

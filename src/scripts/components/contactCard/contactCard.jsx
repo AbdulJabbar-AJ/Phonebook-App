@@ -4,82 +4,76 @@ import { deepCloneObject } from '../../helpers/clone'
 import CardSection from '../contactCardSection/contactCardSection'
 import Button from '../button/button'
 import { addFavourite, removeFavourite } from '../favouritesList/favouritesListActions'
-import { updateContact, deleteContact } from '../contactsList/contactsListActions'
-
+import {updateContact, deleteContact, addContact, showContact} from '../contactsList/contactsListActions'
 import edit from '../../../media/icons/edit.svg'
 import favTrue from '../../../media/icons/star.svg'
 import favFalse from '../../../media/icons/star-outline.svg'
 import trash from '../../../media/icons/trash.svg'
-// import close from '../../../media/icons/close.svg'
-// import Edit from './edit'
-// import style from '../mapStyle'
-// import back from '../../../media/img/icons/back.svg'
 
-// NEED TO SCROLL TO TOP OF CONTACT WHEN SWITCHING BETWEEN CONTACTS
+// TODO - NEED TO SCROLL TO TOP OF CONTACT WHEN SWITCHING BETWEEN CONTACTS
+// TODO - Make edit mode redux store, so can switch between tabs
 
-function ContactCard({contact, favourites, addFavourite, removeFavourite, showContactCallback, updateContact, deleteContact, newContact, newId, closeNewContact}) {
+function ContactCard({contact, favourites, addFavourite, removeFavourite, displayBy, updateContact, deleteContact, addContact, showContact, isNewContact, cancelNewContact}) {
 	const initialDetails = deepCloneObject(contact)
 	const [editMode, setEditMode] = useState(false)
 	const [contactDetails, setContactDetails] = useState(initialDetails)
-
 
 	useEffect(() => {
 		setContactDetails(deepCloneObject(contact))
 		setEditMode(false)
 	}, [contact])
 
-	// useEffect(() => {
-	// 	const abc = {
-	// 		id: newId,
-	// 		name: {first: '', last: ''},
-	// 		phone: [],
-	// 		email: [],
-	// 		address: [],
-	// 		dates: [],
-	// 		other: [],
-	// 		notes: ''
-	// 	}
-	//
-	// 	if (newContact) {
-	// 		setContactDetails(deepCloneObject(abc))
-	// 		setEditMode(true)
-	// 	}
-	//
-	// }, [newContact])
+	useEffect(() => {
+		if (isNewContact) {
+			setEditMode(true)
+		}
+	}, [isNewContact])
 
+
+	// TODO - SUPER IMPORTANT TO AVOID TONNES OF BUGS AND RUNTIME ERRORS // VALIDATE CONTACT DETAILS HERE TO MAKE SURE FOR MINIMUM OF NAME
 	const onChangeCallback = (section, data) => setContactDetails(prevState => ({ ...prevState, [section]: data }))
 	const flipEditMode = () => setEditMode(!editMode)
 	const checkFav = id => favourites.some(favId => favId === id)
 	const toggleStar = id => checkFav(id) ? favTrue : favFalse
 
+
+	// TODO - After starting a new contact, while in edit mode, if you press '+' again, it gets out of editMode, and subsequent clicks of '+' do nothing
+	// TODO - Same thing happens if you save and then try and click '+' again
+	// Validation checks for contactCard will only partially fix this I think
 	function saveChange(id) {
-		updateContact(id, contactDetails)
-		showContactCallback(id)
+		if (isNewContact) {
+			addContact(contactDetails)
+		} else {
+			updateContact(id, contactDetails)
+		}
 		flipEditMode()
 	}
 
 	function cancelChange() {
-		setContactDetails(initialDetails)
+		isNewContact ? cancelNewContact() : setContactDetails(initialDetails)
 		flipEditMode()
 	}
 
 	function removeContact(id) {
 		deleteContact(id)
 		flipEditMode()
-		// NEED TO MAKE SURE IT SELECTS A DIFFERENT CONTACT AFTER DELETING
+		// TODO - NEED TO MAKE SURE THE CONTACT DELETES FROM EVERYWHERE, CONTACTS, FAVOURITES, ALL GROUPS!!!!!!!!
+		// TODO - NEED TO MAKE SURE IT SELECTS A DIFFERENT CONTACT AFTER DELETING
+		// BUT IF VIEW IS NARROW, WANT TO JUST REVERT BACK TO CONTACTSLIST
 		// BUT IF VIEW IS NARROW, WANT TO JUST REVERT BACK TO CONTACTSLIST
 		// SO MAKE A closeContact FUNCTION WHICH WILL GO BACK TO LIST IF NARROW OR ACTIVATE FIRST ITEM IF WIDE
 	}
 
 	function toggleFav(id) {
-		let next
-
 		if (favourites.length === 0) {
 			addFavourite(id)
 		} else if (checkFav(id)) {
 			removeFavourite(id)
 		} else addFavourite(id)
 
+
+		// TODO - Change favourite is contact deleted
+		// let next
 		// if (activeFav && activeFav.id === id) {
 		// 	if (favs.length > 1) {
 		// 		if (favs[0].conId === id) {
@@ -102,70 +96,25 @@ function ContactCard({contact, favourites, addFavourite, removeFavourite, showCo
 // 		}
 // 	}
 
-// 	function closeContactCard(type) {
-// 		switch (type) {
-// 			case 'Contact':
-// 				return hideContact()
-// 			case 'Favourite':
-// 				return hideFav()
-// 			case 'GroupMem':
-// 				return hideGroupMem()
-// 		}
-// 	}
-//
-// 	function idTypeCheck(type) {
-// 		switch (type) {
-// 			case 'Contact':
-// 				return activeContact.id
-// 			case 'Favourite':
-// 				return activeFav.id
-// 			case 'GroupMem':
-// 				return activeGroupMem.id
-// 		}
-// 	}
-//
-// // 	async showMap (address, index) {}
-
-// 	const closeBtn = windowWidth === 'large' ? '' : (
-// 		<img className='btn-close' src={back} onClick={() => closeContactCard(type)} />
-// 	)
-
-// 	// const blur = this.props.windowWidth === 'large' ? '' : (
-// 	//   <div className='blur' />
-// 	// )
-
-	// 	const first = con.name[displayBy]
-	// 	const last = displayBy === 'first' ? con.name.last : con.name.first
-	const first = contact.name.first
-	const last = contact.name.last
-
-	// This must come from the contact and not contactDetails because I don't want it to change until changes have been submitted
+	// This must come from props not state, as we don't want it to update on change of edit fields
+	const first = isNewContact ? 'New Contact' : contact.name[displayBy]
+	const last = displayBy === 'first' ? contact.name.last : contact.name.first
 	const title = (
 		<div className='title'>
 			{/*{closeBtn}*/}
-			{first || last ? <div className='fullName'>{contact.name.prefix} {first} {last}</div> : null}
+			{first || last
+				? <div className='fullName'>{contact.name.prefix}{first}{displayBy === 'last' && first && last ? ', ' : ' '}{last}</div>
+				: null
+			}
 			<div className='company'>{contact.name.company}</div>
 		</div>
 	)
-
-	// const title = first || name ? (
-	// 	<div className='title'>
-	// 		{/*{closeBtn}*/}
-	// 		<div className='fullName'>{name.prefix} {first} {last}</div>
-	// 		<div className='company'>{name.company}</div>
-	// 	</div>
-	// ) : (
-	// 	<div className='title'>
-	// 		{/*{closeBtn}*/}
-	// 		<div className='fullName'>{name.company}</div>
-	// 	</div>
-	// )
 
 	const edits = editMode ? (
 		<div className='edits'>
 			<Button {...{type: 'text', text: 'done', classname: 'btn-done', noBg: true, onClickCallback: () => saveChange(contact.id)}}/>
 			<Button {...{type: 'text', text: 'cancel', classname: 'btn-cancel', noBg: true, onClickCallback: cancelChange}}/>
-			<Button {...{type: 'icon', icon: trash, classname: 'btn-trash', noBg: true, onClickCallback: () => removeContact(contact.id)}}/>
+			{ !isNewContact ? <Button {...{type: 'icon', icon: trash, classname: 'btn-trash', noBg: true, onClickCallback: () => removeContact(contact.id)}}/> : null }
 		</div>
 	) : (
 		<div className='edits'>
@@ -194,26 +143,13 @@ function ContactCard({contact, favourites, addFavourite, removeFavourite, showCo
 }
 
 
-
-const mapStateToProps = ({favouritesList}) => ({
-	favourites: favouritesList.favourites
+const mapStateToProps = ({favouritesList, contactsList}) => ({
+	favourites: favouritesList.favourites,
+	displayBy: contactsList.displayBy
 })
-// contacts: state.contacts,
-// groups: state.groups,
-// activeFav: state.activeFavourite,
-// activeGroupMem: state.activeGroupMember,
-// displayBy: state.displayBy,
-// windowWidth: state.windowWidth
 
 const mapDispatchToProps = {
-	addFavourite, removeFavourite, updateContact, deleteContact
+	addFavourite, removeFavourite, updateContact, deleteContact, addContact, showContact
 }
-// hideContact: () => dispatch(hideContact()),
-// hideFav: () => dispatch(hideFav()),
-// hideGroupMem: () => dispatch(hideGroupMem()),
-// favourite: id => dispatch(addFavourite(id)),
-// rmFav: id => dispatch(removeFavourite(id)),
-// reduceGroups: id => dispatch(reduceGroups(id)),
-// editCon: id => dispatch(editContact(id))
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactCard)

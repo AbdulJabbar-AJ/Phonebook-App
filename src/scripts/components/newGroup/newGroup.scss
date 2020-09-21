@@ -1,0 +1,47 @@
+
+
+.newGroup {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: $bg3;
+  display: grid;
+  grid-template: 50px 3.9rem 26px / 300px;
+  border-radius: 0.5rem;
+  border: 1px solid $faint;
+  overflow: hidden;
+  .heading {
+    font-size: 1.3rem;
+    margin: auto;
+  }
+  &Form {
+    background: $bg2;
+    .label {
+      height: 1.5rem;
+      font-size: 0.9rem;
+      padding: 0.3rem;
+      box-sizing: border-box;
+      color: $dark;
+    }
+    input {
+      outline: none;
+      border: none;
+      width: 100%;
+      height: 2.4rem;
+      font-size: 1.2rem;
+      padding: 0.6rem 0.6rem 0.6rem 0.4rem;
+      box-sizing: border-box;
+      font-weight: 300;
+    }
+  }
+  &-buttons{
+    display: flex;
+    justify-content: space-between;
+    color: $dark;
+    .btn { margin: auto 0}
+  }
+}
