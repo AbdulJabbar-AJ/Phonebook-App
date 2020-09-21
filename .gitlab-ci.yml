@@ -23,7 +23,7 @@ default:
 
 .deploy:
   stage: deploy
-  before_script:
+  script:
     - docker pull $IMAGE_NAME
     - docker run -dt --name $CONTAINER $IMAGE_NAME
     - rm -rf $STATIC_DIR/..?* $STATIC_DIR/.[!.]* $STATIC_DIR/*
