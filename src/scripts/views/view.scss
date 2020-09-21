@@ -64,9 +64,44 @@
         @include viewPanels;
         height: $fullPanelHeadingHeight;
         overflow: hidden;
+        background-color: $bg3;
+        border-bottom: 1px solid $highlights;
+        font-size: 1.5rem;
+        padding: 5px 0 10px 10px;
       }
     }
   }
+
+  .groupsViewContainer {
+    height: 100%;
+    display: grid;
+    overflow-x: hidden;
+    grid-template: 1fr / 100% 100%;
+    &.slideLeft .groupsView { animation: 0.5s ease-in-out slideLeft; }
+    &.slideRight .groupsView { animation: 0.5s ease-in-out reverse slideLeft; }
+    .groupsView.transform { transform: translateX(-100%) }
+
+    .fullPanel-heading { padding: 10px }
+
+    .sidePanel-heading {
+      display: flex;
+      .heading {
+        flex-grow: 1;
+        text-align: right;
+        overflow: scroll;
+        //text-overflow: ellipsis;
+        padding-left: 10px;
+        width: calc(100% - 22px)
+      }
+      .btn { min-width: $btn-size }
+    }
+
+  }
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(0) }
+  to { transform: translateX(-100%) }
 }
 
 .settingsView {
@@ -90,7 +125,6 @@
     }
   }
 }
-
 
 
 @media only screen and (min-width: 769px) {

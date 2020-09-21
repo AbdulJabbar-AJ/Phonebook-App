@@ -4,8 +4,9 @@ import { showContact } from './contactsListActions'
 import {deepCloneArray} from '../../helpers/clone'
 import ContactsListLetter from './components/contactsListLetter'
 import ContactListItem from './components/contactsListItem'
+import BlankMessage from '../blankMessage/blankMessage'
 
-function ContactsList({contacts, activeContact, searchTerms, sortBy, showContact}) {
+function ContactsList({contacts, activeContact, showContact, searchTerms, sortBy, showContactCallback}) {
 	const rawContacts = deepCloneArray(contacts)
 	const [phonebook, setPhonebook] = useState(rawContacts)
 	const [letters, setLetters] = useState([])
@@ -13,18 +14,9 @@ function ContactsList({contacts, activeContact, searchTerms, sortBy, showContact
 	useEffect(() => setPhonebook(generatePhonebook(sortContacts(filterContacts(rawContacts)))), [contacts, searchTerms, sortBy])
 	const isActive = contact => activeContact === contact.id
 
-	// FUNCTIONS
-	// FILTER
+	function filterContacts(rawContacts) {
 		// IN raw contacts
 		// OUT filtered contacts for search terms
-	// SORT
-		// IN filtered contacts
-		// OUT Sorted contacts based on sortBy
-	// LETTER (including letter sort, already done?)
-		// IN filtered and sorted contacts
-		// OUT phonebook object with letters as keys and array of contacts for that letter as values
-
-	function filterContacts(rawContacts) {
 		if (searchTerms.length > 0) {
 			return rawContacts.filter(contact => (
 				searchTerms.every(term => (
@@ -36,28 +28,31 @@ function ContactsList({contacts, activeContact, searchTerms, sortBy, showContact
 		} else return rawContacts
 	}
 
-	function sortContacts(filteredContacts) {
-		function getNameForSorting(name, sortBy) {
-			const secondName = sortBy == 'last' ? 'first' : 'last'
-			if (name.first || name.last) {
-				return name[sortBy] ? name[sortBy] : name[secondName]
-			} else return name.company
-		}
+	function getNameForSorting(name, sortBy) {
+		const secondName = sortBy === 'last' ? 'first' : 'last'
+		if (name.first || name.last) {
+			return name[sortBy] ? name[sortBy] : name[secondName]
+		} else return name.company
+	}
 
+	function sortContacts(filteredContacts) {
+		// IN filtered contacts
+		// OUT Sorted contacts based on sortBy
 		return filteredContacts.sort((a, b) => {
 			const nameA = getNameForSorting(a.name, sortBy).toLocaleLowerCase()
 			const nameB = getNameForSorting(b.name, sortBy).toLocaleLowerCase()
 			return nameA.localeCompare(nameB)
 		})
 	}
-	// console.log(sortContacts(filterContacts(rawContacts)))
 
 	function generatePhonebook(sortedContacts) {
+		// IN filtered and sorted contacts
+		// OUT phonebook object with letters as keys and array of contacts for that letter as values
 		const letterSet = new Set()
 		const regex = RegExp('^[a-zA-Z]')
 
 		sortedContacts.forEach(contact => {
-			const value = contact.name[sortBy]
+			const value = getNameForSorting(contact.name, sortBy)
 			regex.test(value) ? letterSet.add(value[0]) : letterSet.add('#')
 		})
 
@@ -73,7 +68,7 @@ function ContactsList({contacts, activeContact, searchTerms, sortBy, showContact
 
 
 		sortedContacts.forEach(contact => {
-			const value = contact.name[sortBy]
+			const value = getNameForSorting(contact.name, sortBy)
 			let array
 			regex.test(value) ? array = value[0] : array = '#'
 			generatedPhonebook[array].contacts.push(contact)
@@ -83,33 +78,29 @@ function ContactsList({contacts, activeContact, searchTerms, sortBy, showContact
 
 	return (
 		<div className='contactsList'>
-			{letters.map(letter => {
-				return (
-					<div className='contactSection' key={letter}>
-						<ContactsListLetter {...{letter}}  />
-						<div className='contacts'>
-							{phonebook[letter].contacts.map((contact) => {
-								return <ContactListItem {...{key: contact.id, contact, isActive: isActive(contact), onClickCallback: () => showContact(contact.id)}} />
-							})}
+			{letters.length > 0
+				? (letters.map(letter => {
+					return (
+						<div className='contactSection' key={letter}>
+							<ContactsListLetter {...{letter}}  />
+							<div className='contacts'>
+								{phonebook[letter].contacts.map((contact) => {
+									return <ContactListItem {...{key: contact.id, contact, isActive: isActive(contact), onClickCallback: () => showContactCallback(contact.id)}} />
+								})}
+							</div>
 						</div>
-					</div>
-				)
-			})}
+					)
+				})) : <BlankMessage message='No Contacts'/>
+			}
 		</div>
 	)
 }
 
-
-
 const mapStateToProps = ({contactsList}) => ({
-	contacts: contactsList.contacts,
-	activeContact: contactsList.activeContact,
 	sortBy: contactsList.sortBy,
 	searchTerms: contactsList.searchTerms
 })
 
-const mapDispatchToProps = {
-	showContact
-}
+const mapDispatchToProps = { showContact }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsList)
+export default connect(mapStateToProps)(ContactsList)

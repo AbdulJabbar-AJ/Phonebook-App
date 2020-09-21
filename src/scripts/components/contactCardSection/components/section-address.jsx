@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import Entry from '../../entry/entry'
 import AddEntry from '../../addEntry/addEntry'
+import { address } from '../../../helpers/contacts'
+import MapImage from '../../mapImage/mapImage'
+import classNames from 'classnames'
 
 export default function Address ({data, editMode, onChangeCallback}) {
 	const [addresses, setAddresses] = useState(data)
@@ -9,6 +12,7 @@ export default function Address ({data, editMode, onChangeCallback}) {
 	useEffect(() => onChangeCallback('address', addresses), [addresses])
 
 	const removeEntry = index => setAddresses(prevState => prevState.filter((other, i) => index !== i))
+	const addNewEntry = () => setAddresses(prevState => [...prevState, address])
 
 	function updateAddresses(value, index, item) {
 		setAddresses(prevState => {
@@ -18,16 +22,11 @@ export default function Address ({data, editMode, onChangeCallback}) {
 		})
 	}
 
-	function addNewEntry() {
-		const newDataSet = { type: 'home', line1: '', line2: '', city: '', county: '', country: '', postcode: '' }
-		setAddresses(prevState => [...prevState, newDataSet])
-	}
-
 	const mainInput = (i, address) => {
 		let _1 = ''; if (address.city && address.county) { _1 = ', ' }
 		let _2 = ''; if (address.postcode && address.country) { _2 = ', ' }
 		return editMode ? (
-			<div className='data' onKeyUp={(e) => updateAddresses(e.target.value, i, e.target.name )}>
+			<div className={classNames('data', {edit: editMode})} onKeyUp={(e) => updateAddresses(e.target.value, i, e.target.name )}>
 				<input name='line1' type='text' defaultValue={address.line1} placeholder='Line 1' />
 				<input name='line2' type='text' defaultValue={address.line2} placeholder='Line 2' />
 				<input name='city' type='text' defaultValue={address.city} placeholder='City/Town' />
@@ -37,13 +36,15 @@ export default function Address ({data, editMode, onChangeCallback}) {
 			</div>
 			) : (
 				<div className='data'>
-					<div>{address.line1}</div>
-					<div>{address.line2}</div>
-					<div>{address.city} {_1} {address.county}</div>
-					<div>{address.postcode} {_2} {address.country}</div>
-					{/*<div >*/}
-					{/*	<img id={`googleMaps${i}`} src='' />*/}
-					{/*</div>*/}
+					<div className='addressBlock'>
+						<div>{address.line1}</div>
+						<div>{address.line2}</div>
+						<div>{address.city} {_1} {address.county}</div>
+						<div>{address.postcode} {_2} {address.country}</div>
+					</div>
+					<div className='mapImage'>
+						<MapImage address={address} />
+					</div>
 				</div>
 		)
 	}

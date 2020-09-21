@@ -1,3 +1,5 @@
+// TODO - Validate anything that needs to be validated
+
 const phone = event => {
 	const permissibleKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', ' ', '(', ')']
 	const {key} = event

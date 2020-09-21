@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Entry from '../../entry/entry'
 import AddEntry from '../../addEntry/addEntry'
+import { email } from '../../../helpers/contacts'
 import validate from '../../../helpers/validate'
 
 export default function Email ({data, editMode, onChangeCallback}) {
@@ -11,6 +12,8 @@ export default function Email ({data, editMode, onChangeCallback}) {
 	useEffect(() => onChangeCallback('email', emails), [emails])
 
 	const removeEntry = index => setEmails(prevState => prevState.filter((email, i) => index !== i))
+	const addNewEntry = () => setEmails(prevState => [...prevState, email])
+
 
 	function updateEmails(value, index, item) {
 		setEmails(prevState => {
@@ -24,11 +27,6 @@ export default function Email ({data, editMode, onChangeCallback}) {
 		updateEmails(false, primary, 'primary')
 		setPrimary(index)
 		updateEmails(true, index, 'primary')
-	}
-
-	function addNewEntry() {
-		const newDataSet = {type: 'home', address: '', primary: false}
-		setEmails(prevState => [...prevState, newDataSet])
 	}
 
 	const mainInput = (i, email) => {

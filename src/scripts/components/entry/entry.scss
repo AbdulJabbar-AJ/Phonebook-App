@@ -45,7 +45,6 @@
     &::-webkit-inner-spin-button { -webkit-appearance: none; }
   }
 
-
   &.phone,
   &.email {
     .heading {
@@ -73,7 +72,6 @@
     }
     select { width: 70px; }
     .data { grid-row: span 2; }
-    .addEntry { left: 37px; }
     .removeEntry { margin: auto; }
   }
 
@@ -109,7 +107,7 @@
     border: none;
     border-radius: 0.25rem;
     padding: 5px;
-    width: calc(100% - 20px);
+    width: calc(100% - 20px); // TODO - this is causing the contactcard heading to scroll at the last 20pc of the card
     font-size: 0.8rem;
     line-height: 1.5;
     resize: none;

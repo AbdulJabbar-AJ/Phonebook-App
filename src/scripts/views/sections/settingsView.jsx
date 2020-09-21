@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setSortBy, setDisplayBy } from '../../components/contactsList/contactsListActions'
-import Toggle from '../../helpers/toggle'
+import Toggle from '../../components/button/toggle'
 
 
 function SettingsView({sortBy, setSortBy, displayBy, setDisplayBy}) {

@@ -2,7 +2,7 @@ import initContacts from '../../api/initData'
 
 const initState = {
 	contacts: [ ...initContacts ],
-	activeContact: initContacts[0].id,
+	activeContact: '',
 	searchTerms: [],
 	sortBy: 'first',
 	displayBy: 'first'

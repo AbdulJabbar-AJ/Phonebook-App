@@ -1,25 +1,19 @@
 const initState = {
-	activeFavourite: 3,
-	favourites: [3, 4, 5, 6, 7, 8, 9]
+	activeFavourite: '',
+	favourites: [],
+	dummyFavsSet: false
 }
 
 export default function contactsListReducer(state = initState, action) {
 	switch (action.type) {
 		case 'ADD_FAVOURITE':
-			return {
-				...state,
-				favourites: [...state.favourites, action.id]
-			}
+			return { ...state, favourites: [...state.favourites, action.id] }
 		case 'REMOVE_FAVOURITE':
-			return {
-				...state,
-				favourites: state.favourites.filter(id => id !== action.id)
-			}
+			return { ...state, favourites: state.favourites.filter(id => id !== action.id) }
 		case 'SHOW_FAVOURITE':
-			return {
-				...state,
-				activeFavourite: action.id
-			}
+			return { ...state, activeFavourite: action.id }
+		case 'SET_DUMMY_FAVS':
+			return { ...state, dummyFavsSet: true }
 		default:
 			return state
 	}

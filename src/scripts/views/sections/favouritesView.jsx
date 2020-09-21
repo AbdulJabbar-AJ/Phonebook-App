@@ -4,26 +4,24 @@ import { removeFavourite, showFavourite } from '../../components/favouritesList/
 import View from '../view'
 import FavouritesList from '../../components/favouritesList/favouritesList'
 import ContactCard from '../../components/contactCard/contactCard'
-import Button from '../../components/button/button'
+import BlankMessage from '../../components/blankMessage/blankMessage'
+
+// TODO - Move to next favourite it current removed
 
 const FavouritesView = ({contacts, favourites, activeFavourite}) => {
-	const contact = contacts.find(contact => contact.id === activeFavourite)
+	const contact = contacts.find(contact => contact.id === activeFavourite || false)
 
 	const heading = (
-		<div className='sidePanel-heading favouritesView-sidePanelHeading'>
+		<div className='sidePanel-heading sidePanel-heading favouritesView-sidePanelHeading'>
 			<div className='heading'>Favourites</div>
 		</div>
 	)
 
-	const side = <div className='sidePanel'><FavouritesList /></div>
-	const main = <div className='mainPanel'><ContactCard {...{contact, showContactCallback: showFavourite}}/></div>
+	const side = <div className='sidePanel'><FavouritesList/></div>
+	const main = <div className='mainPanel'>{contact ? <ContactCard {...{contact}}/> : <BlankMessage message='No Favourite selected'/>}</div>
 
 	return <View classname='favouritesView' heading={heading} splitView={true} panels={{side, main}}/>
 }
-
-// con, type, favs, favourite, rmFav, activeFav, activeContact, activeGroupMem,
-// 	windowWidth, showFav, contacts, hideFav, hideContact, hideGroupMem, displayBy, editCon,
-// 	beingEdited
 
 const mapStateToProps = ({contactsList, favouritesList}) => ({
 	contacts: contactsList.contacts,

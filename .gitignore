@@ -2,10 +2,10 @@
 node_modules/
 .cache/
 dist/
+.parcel-cache/
 
 ### macOS ###
 .DS_*
 
 ### WebStorm ###
 .idea/
-

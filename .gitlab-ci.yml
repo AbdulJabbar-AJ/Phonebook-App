@@ -1,0 +1,65 @@
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
+
+variables:
+  CONTAINER: phonebook-frontend-container
+  WORKDIR: /usr/src/app
+  BUILDDIR: /dist
+
+
+# Reused scripts
+default:
+  before_script:
+    - echo $CI_DEPLOY_PASSWORD | docker login -u $CI_DEPLOY_USER --password-stdin $CI_REGISTRY
+  after_script:
+    - sudo rm -r ~/builds/ # Delete all builds cache
+    - docker container stop $CONTAINER # Stops container, as only needed for static files
+    - docker container prune -f
+    - docker image prune -f # Garbage collect all dangling images
+    - sudo systemctl restart nginx # Restart nginx
+
+.deploy:
+  stage: deploy
+  before_script:
+    - docker pull $IMAGE_NAME
+    - docker run -dt --name $CONTAINER $IMAGE_NAME
+    - rm -rf $STATIC_DIR/..?* $STATIC_DIR/.[!.]* $STATIC_DIR/*
+    - docker cp $CONTAINER:$WORKDIR$BUILDDIR/. $STATIC_DIR
+
+
+# Pipeline
+stages:
+  - build
+  - deploy
+
+
+build:
+  stage: build
+  script:
+    - docker build -t $IMAGE_NAME .
+    - docker push $IMAGE_NAME
+  tags:
+    - shell
+
+
+deploy_staging:
+  extends: .deploy
+  script:
+    - echo "Deployed to staging"
+  environment:
+    name: staging
+  tags:
+    - shell
+
+
+deploy_prod:
+  extends: .deploy
+  script:
+    - echo "Deployed to Production"
+  environment:
+    name: production
+  when: manual
+  tags:
+    - ssh
