@@ -4,7 +4,7 @@ import { showGroup, removeGroup, setEditMembersGroup, setGroupMembers, addGroup,
 import { setIsSelectMembersView } from '../../views/viewActions'
 import ChooseGroupMembers from '../chooseGroupMembers/chooseGroupMembers'
 import GroupSummary from '../groupSummary/groupSummary'
-import NewGroup from '../newGroup/NewGroup'
+import NewGroup from '../newGroup/newGroup'
 import classNames from 'classnames'
 import Button from '../button/button'
 import add from '../../../media/icons/add.svg'

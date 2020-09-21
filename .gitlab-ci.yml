@@ -9,6 +9,7 @@ variables:
   BUILDDIR: /dist
 
 
+
 # Reused scripts
 default:
   before_script:
@@ -22,7 +23,7 @@ default:
 
 .deploy:
   stage: deploy
-  before_script:
+  script:
     - docker pull $IMAGE_NAME
     - docker run -dt --name $CONTAINER $IMAGE_NAME
     - rm -rf $STATIC_DIR/..?* $STATIC_DIR/.[!.]* $STATIC_DIR/*
@@ -46,8 +47,6 @@ build:
 
 deploy_staging:
   extends: .deploy
-  script:
-    - echo "Deployed to staging"
   environment:
     name: staging
   tags:
@@ -56,8 +55,6 @@ deploy_staging:
 
 deploy_prod:
   extends: .deploy
-  script:
-    - echo "Deployed to Production"
   environment:
     name: production
   when: manual
