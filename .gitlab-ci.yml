@@ -47,8 +47,6 @@ build:
 
 deploy_staging:
   extends: .deploy
-  script:
-    - echo "Deployed to staging"
   environment:
     name: staging
   tags:
@@ -57,8 +55,6 @@ deploy_staging:
 
 deploy_prod:
   extends: .deploy
-  script:
-    - echo "Deployed to Production"
   environment:
     name: production
   when: manual
