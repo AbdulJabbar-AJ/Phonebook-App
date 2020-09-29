@@ -142,8 +142,10 @@
 }
 
 @media only screen and (max-width: 559px) {
-  .mainPanelContainer, .sidePanelContainer, .fullPanelContainer {
-    height: calc(100vh - #{$smallNavHeight});
+  .viewContainer {
+    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer {
+      height: calc(100vh - #{$smallNavHeight});
+    }
   }
 }
 

@@ -60,7 +60,6 @@ const ContactsView = ({contacts, activeContact, topContact, showContact, narrowV
 
 	const side = <div className='sidePanel'><ContactsList {...{contacts, activeContact: contactObject, showContactCallback: activateContact}} /></div>
 
-	console.log(contactObject)
 	const main = contactObject.hasOwnProperty('id')
 		? <div className={classNames('mainPanel', {slideLeft})}><ContactCard {...{contact: contactObject, isNewContact, setIsNewContact, closeContactCallback: () => showContact('')}}/></div>
 		: <BlankMessage message='No Contact Selected'/>
