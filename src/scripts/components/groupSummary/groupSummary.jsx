@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
-import { showGroup, showGroupContact, removeGroup, renameGroup } from '../groupsList/groupsListActions'
+import { showGroup, removeGroup, renameGroup } from '../groupsList/groupsListActions'
 import Button from '../button/button'
 import remove from '../../../media/icons/remove-circle.svg'
-import scrollGroupPreview from '../../helpers/scrollGroupPrewiews'
+import scrollGroupPreview from '../../helpers/scrollGroupPreviews'
 
-const GroupSummary = ({group, contacts, editMode, showGroup, showGroupContact, removeGroup, renameGroup, editMembersCallback}) => {
+const GroupSummary = ({group, contacts, editMode, showGroup, removeGroup, renameGroup, editMembersCallback}) => {
 	const [memberList, setMemberList] = useState([])
 	const [groupNameInput, setGroupNameInput] = useState(group.name)
 	const summaryDomElement = useRef(null)
 
 	useEffect(() => {
+		// TODO - NAP - make it work on resize
 		const parent = summaryDomElement.current
 		const groupName = parent.querySelector('.groupName')
 		const groupPreview = parent.querySelector('.groupPreview')
@@ -41,7 +42,6 @@ const GroupSummary = ({group, contacts, editMode, showGroup, showGroupContact, r
 
 	function activateGroup() {
 		!editMode ? showGroup(group.id) : null
-		showGroupContact(group.members[0])
 	}
 
 	const groupName = editMode
@@ -66,5 +66,5 @@ const GroupSummary = ({group, contacts, editMode, showGroup, showGroupContact, r
 }
 
 const mapStateToProps = ({contactsList}) => ({ contacts: contactsList.contacts })
-const mapDispatchToProps = { showGroup, showGroupContact, removeGroup, renameGroup }
+const mapDispatchToProps = { showGroup, removeGroup, renameGroup }
 export default connect(mapStateToProps, mapDispatchToProps)(GroupSummary)

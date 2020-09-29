@@ -16,7 +16,7 @@ function SettingsView({sortBy, setSortBy, displayBy, setDisplayBy}) {
 				<span className='setting'><strong>Sort By</strong></span>
 				<div className='options'>
 					<span className='option-left'>First Name</span>
-					<Toggle {...{initialState: isOn(sortBy), colour: false, onClickCallback: switchSortBy}} />
+					<Toggle {...{initialState: isOn(sortBy), onClickCallback: switchSortBy}} />
 					<span className='option-right'>Last Name</span>
 				</div>
 			</div>
@@ -25,7 +25,7 @@ function SettingsView({sortBy, setSortBy, displayBy, setDisplayBy}) {
 				<span className='setting'><strong>Display By</strong></span>
 				<div className='options'>
 					<span className='option-left'>First Name</span>
-					<Toggle {...{initialState: isOn(displayBy), colour: false, onClickCallback: switchDisplayBy}} />
+					<Toggle {...{initialState: isOn(displayBy), onClickCallback: switchDisplayBy}} />
 					<span className='option-right'>Last Name</span>
 				</div>
 			</div>

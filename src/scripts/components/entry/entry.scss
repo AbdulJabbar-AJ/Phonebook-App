@@ -100,19 +100,4 @@
       background: $highlights2;
     }
   }
-
-  &.notes textarea {
-    background: $veryFaint;
-    outline: none;
-    border: none;
-    border-radius: 0.25rem;
-    padding: 5px;
-    width: calc(100% - 20px); // TODO - this is causing the contactcard heading to scroll at the last 20pc of the card
-    font-size: 0.8rem;
-    line-height: 1.5;
-    resize: none;
-    margin-left: 5px;
-    margin-bottom: 1rem;
-  }
 }
-

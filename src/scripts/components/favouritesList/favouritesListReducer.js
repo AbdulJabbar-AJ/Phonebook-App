@@ -1,7 +1,9 @@
+import { favourites } from '../../helpers/initiData'
+
 const initState = {
+	favourites: [ ...favourites ],
 	activeFavourite: '',
-	favourites: [],
-	dummyFavsSet: false
+	favouriteObject: {}
 }
 
 export default function contactsListReducer(state = initState, action) {
@@ -12,8 +14,8 @@ export default function contactsListReducer(state = initState, action) {
 			return { ...state, favourites: state.favourites.filter(id => id !== action.id) }
 		case 'SHOW_FAVOURITE':
 			return { ...state, activeFavourite: action.id }
-		case 'SET_DUMMY_FAVS':
-			return { ...state, dummyFavsSet: true }
+		case 'UPDATE_FAVOURITE_OBJECT':
+			return { ...state, favouriteObject: action.contact }
 		default:
 			return state
 	}

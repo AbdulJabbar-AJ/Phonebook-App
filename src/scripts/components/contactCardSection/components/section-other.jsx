@@ -1,29 +1,28 @@
 import React, {useEffect, useState} from 'react'
 import Entry from '../../entry/entry'
 import AddEntry from '../../addEntry/addEntry'
-import {other} from '../../../helpers/contacts'
+import { Other as other } from '../../../helpers/classConstructors/contact'
 
 export default function Other ({data, editMode, onChangeCallback}) {
 	const [others, setOthers] = useState(data)
 
 	useEffect(() => setOthers(data), [data])
-	useEffect(() => onChangeCallback('other', others), [others])
 
-	const removeEntry = index => setOthers(prevState => prevState.filter((other, i) => index !== i))
-	const addNewEntry = () => setOthers(prevState => [...prevState, other])
+	const addNewEntry = () => onChangeCallback('other', [...others, new other])
+	const removeEntry = index => onChangeCallback('other', others.filter((other, i) => index !== i))
 
 	function updateOthers(value, index, item) {
 		setOthers(prevState => {
-			const updated = [...prevState]
-			updated[index][item] = value
-			return updated
+			const nextState = [...prevState]
+			nextState[index][item] = value
+			return nextState
 		})
+		onChangeCallback('other', others)
 	}
 
 
 	// TODO - ALso handle for insta and linked in handles, and for in case they put in full url
 	function createLink (type, value) {
-		console.log(value)
 		let link = ''
 		switch (type) {
 			case 'Twitter':
@@ -71,7 +70,7 @@ export default function Other ({data, editMode, onChangeCallback}) {
 
 	const mainInput = (i, other) => {
 		return editMode
-			? <input className='data' name='data' type='string' defaultValue={other.data} onKeyUp={(e) => updateOthers(e.target.value, i, 'data')} placeholder={generatePlaceholder(other.type)} />
+			? <input className='data' name='data' type='string' value={other.data} onChange={(e) => updateOthers(e.target.value, i, 'data')} placeholder={generatePlaceholder(other.type)} />
 			: <div className='data'>{createLink(other.type, other.data)}</div>
 	}
 
@@ -86,7 +85,7 @@ export default function Other ({data, editMode, onChangeCallback}) {
 					editMode,
 					options: ['Twitter', 'Facebook', 'Instagram', 'website', 'LinkedIn', 'other'],
 					option: other.type,
-					setDropdownOption: (event) => updateOthers(event.target.value, index, 'type'),
+					setDropdownOption: (e) => updateOthers(e.target.value, index, 'type'),
 					mainInput: mainInput(index, other),
 					hasPrimary: false,
 					dataLength: data.length,

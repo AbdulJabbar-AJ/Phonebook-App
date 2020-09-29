@@ -9,7 +9,6 @@ import contactsIcon from '../../media/icons/person-circle-outline.svg'
 import favouritesIcon from '../../media/icons/star-outline.svg'
 import groupsIcon from '../../media/icons/people-circle-outline.svg'
 
-
 const Page = () => {
 	return (
 		<div className="page">

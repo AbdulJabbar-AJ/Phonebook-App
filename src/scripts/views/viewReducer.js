@@ -1,7 +1,7 @@
 const initState = {
 	isGroupView: false,
 	isSelectMembersView: false,
-	groupsEditMode: false,
+	narrowView: false
 }
 
 export default function viewReducer(state = initState, action) {
@@ -10,6 +10,8 @@ export default function viewReducer(state = initState, action) {
 			return { ...state, isGroupView: action.bool }
 		case 'SET_IS_SELECT_MEMBERS_VIEW':
 			return { ...state, isSelectMembersView: action.bool }
+		case 'SET_NARROW_VIEW':
+			return { ...state, narrowView: action.bool }
 		default:
 			return state
 	}

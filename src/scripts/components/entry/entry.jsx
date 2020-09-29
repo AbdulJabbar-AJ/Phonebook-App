@@ -12,7 +12,7 @@ export default function Entry(props) {
 			{editMode ? <Button {...{type: 'icon', icon: remove, classname: 'removeEntry', onClickCallback: removeEntryCallback, noBg: true}} /> : null}
 			<EntryTypeDropdown {...{editMode, options, value: option, onChangeCallback: setDropdownOption}} />
 			{mainInput}
-			{hasPrimary ? <Primary {...{name: type, dataLength, value: isPrimary, editMode, changePrimary}} /> : null}
+			{hasPrimary && dataLength > 1 ? <Primary {...{name: type, dataLength, value: isPrimary, editMode, changePrimary}} /> : null}
 		</div>
 	)
 }

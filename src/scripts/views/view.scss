@@ -13,6 +13,16 @@
       box-sizing: border-box;
       grid-template: $fullPanelHeadingHeight 1fr / 1fr;
     }
+    &.narrowView {
+      grid-template: 1fr / 100% 100%;
+      overflow: hidden; // TODO - temporary
+
+      .mainPanel {
+        transform: translateX(-100%);
+        &.slideLeft { animation: 0.5s ease-in-out forwards slideLeft; }
+        &.slideRight { animation: 0.5s ease-in-out reverse slideLeft; }
+      }
+    }
   }
 
   .mainPanelContainer, .sidePanelContainer {
@@ -40,10 +50,7 @@
       }
     }
 
-    .mainPanel {
-      // Must be at least 320px at all times
-      @include viewPanels;
-    }
+    .mainPanel { @include viewPanels; }
   }
 
   .sidePanelContainer {
@@ -77,31 +84,27 @@
     display: grid;
     overflow-x: hidden;
     grid-template: 1fr / 100% 100%;
+
     &.slideLeft .groupsView { animation: 0.5s ease-in-out slideLeft; }
     &.slideRight .groupsView { animation: 0.5s ease-in-out reverse slideLeft; }
     .groupsView.transform { transform: translateX(-100%) }
 
     .fullPanel-heading { padding: 10px }
-
     .sidePanel-heading {
       display: flex;
       .heading {
         flex-grow: 1;
         text-align: right;
         overflow: scroll;
-        //text-overflow: ellipsis;
         padding-left: 10px;
         width: calc(100% - 22px)
       }
       .btn { min-width: $btn-size }
     }
 
-  }
-}
+    .splitView {background: $bg2}
 
-@keyframes slideLeft {
-  from { transform: translateX(0) }
-  to { transform: translateX(-100%) }
+  }
 }
 
 .settingsView {
@@ -127,18 +130,51 @@
 }
 
 
-@media only screen and (min-width: 769px) {
-}
 
-@media only screen and (max-width: 768px) {
+
+@media only screen and (max-width: 889px) {
   .viewContainer {
     border-radius: 0;
-    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer { height: calc(100vh - #{$medNavHeight}); }
+    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer {
+      height: calc(100vh - #{$medNavHeight});
     }
+  }
 }
 
 @media only screen and (max-width: 559px) {
-  .viewContainer {
-    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer { height: calc(100vh - #{$smallNavHeight}); }
+  .mainPanelContainer, .sidePanelContainer, .fullPanelContainer {
+    height: calc(100vh - #{$smallNavHeight});
   }
 }
+
+
+
+// Absolute min design for is 320px, i.e. iphone 4s
+// make sure contactCard is always >= 450px, unless screen < 450px        // Target contactCard 450 - 540 ??? (540 at full view)
+// In which case, make sure map is below address
+
+// ALL CASES
+
+// 320px to 449px
+// no split panes, map below address, navbar at bottom
+// not, done, done
+
+
+// 450 to 559
+// no split panes, normal map here on out, navbar at bottom
+// not, done, done
+
+// 560 to 689
+// no split view, navbar at top
+// not, done
+
+
+// 690 to 889
+// split view. navbar at top
+// DONE
+
+// 890++
+// full view, side navbar
+// DONE
+
+

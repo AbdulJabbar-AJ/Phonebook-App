@@ -1,52 +1,78 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
-import { addContact, showContact } from '../../components/contactsList/contactsListActions'
+import { addContact, showContact, setContact } from '../../components/contactsList/contactsListActions'
 import View from '../view'
 import ContactsList from '../../components/contactsList/contactsList'
 import ContactCard from '../../components/contactCard/contactCard'
 import SearchBar from '../../components/searchBar/searchBar'
 import Button from '../../components/button/button'
 import close from '../../../media/icons/close.svg'
-import Contact from '../../helpers/contacts'
+import Contact from '../../helpers/classConstructors/contact'
 import BlankMessage from '../../components/blankMessage/blankMessage'
+import classNames from 'classnames'
 
-// TODO - need to make sure active contact on load is the top contact
+// // NOTE
+// activeContact from redux -> props is id of activeContact, otherwise ''
+// contact from component state is the contact object with all data
 
-const ContactsView = ({contacts, activeContact, showContact}) => {
-	const showActiveContact = () => contacts.find(contact => contact.id === activeContact)
-	const [contact, setContact] = useState(showActiveContact)
+const ContactsView = ({contacts, activeContact, topContact, showContact, narrowView, contactObject, setContact}) => {
 	const [isNewContact, setIsNewContact] = useState(false)
+	const [slideLeft, setSlideLeft] = useState(false)
 
-	useEffect(() => setContact(showActiveContact()), [activeContact])
-	useEffect(() => setContact(showActiveContact()), [contacts])
+	const contactExists = id => contacts.some(contact => contact.id === id)
+	useEffect(showCard, [narrowView, topContact, activeContact, isNewContact, contacts])
 
-	const addContactCallback = () => {
-		setIsNewContact(true)
-		setContact(new Contact(contacts.length +  1))
+	function showCard() {
+		if (!isNewContact) {
+			if (!activeContact) {
+				if (!narrowView && topContact !== '') {
+					setContact(contacts.find(contact => contact.id === topContact))
+				} else {
+					setContact({})
+				}
+			} else if (contactExists(activeContact)) {
+		 		setContact(contacts.find(contact => contact.id === activeContact))
+			} else {
+				showContact('')
+			}
+		}
 	}
 
-	const cancelNewContact = () => {
+	function activateContact(id) {
+		showContact(id)
 		setIsNewContact(false)
-		setContact(showActiveContact())
+		setSlideLeft(true)
+		setTimeout(() => setSlideLeft(false),1000)
+	}
+
+	function newContact() {
+		setIsNewContact(true)
+		setContact(new Contact())
 	}
 
 	const heading = (
 		<div className='sidePanel-heading contactsView-sidePanelHeading'>
 			<div className='heading'>Contacts</div>
-			<Button type='icon' classname='addContact-btn' icon={close} onClickCallback={addContactCallback} />
+			<Button type='icon' classname='addContact-btn' icon={close} onClickCallback={newContact} />
 			<SearchBar/>
 		</div>
 	)
 
-	// newContact, newId: contacts.length +  1, closeNewContact: () => setNewContact(false),
-	const side = <div className='sidePanel'><ContactsList {...{contacts, activeContact, showContactCallback: showContact}} /></div>
-	const main = <div className='mainPanel'>{activeContact !== '' && contact ? <ContactCard {...{contact, isNewContact, cancelNewContact}}/> : <BlankMessage message='No Contact Selected'/> }</div>
-	return <View classname='contactsView' heading={heading} splitView={true} panels={{side, main}}/>
+	const side = <div className='sidePanel'><ContactsList {...{contacts, activeContact: contactObject, showContactCallback: activateContact}} /></div>
+
+	const main = contactObject.hasOwnProperty('id')
+		? <div className={classNames('mainPanel', {slideLeft})}><ContactCard {...{contact: contactObject, isNewContact, setIsNewContact, closeContactCallback: () => showContact('')}}/></div>
+		: <BlankMessage message='No Contact Selected'/>
+
+	return <View {...{ classname: 'contactsView', heading, splitView: true, panels: {side, main}, narrowView }}/>
 }
 
-const mapStateToProps = ({contactsList}) => ({
+const mapStateToProps = ({contactsList, view}) => ({
+	narrowView: view.narrowView,
 	contacts: contactsList.contacts,
-	activeContact: contactsList.activeContact
+	activeContact: contactsList.activeContact,
+	topContact: contactsList.topContact,
+	contactObject: contactsList.contactObject
 })
-const mapDispatchToProps = { addContact, showContact }
+const mapDispatchToProps = { addContact, showContact, setContact }
 export default connect(mapStateToProps, mapDispatchToProps)(ContactsView)

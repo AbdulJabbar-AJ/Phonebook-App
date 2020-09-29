@@ -5,6 +5,9 @@
 // Fonts
 @import "fonts";
 
+// Animations
+@import "animations";
+
 // Components
 @import "components";
 
@@ -33,22 +36,16 @@ html, body, #root {
   border-radius: $borderRadius;
   box-sizing: border-box;
   background-color: $bg1;
-}
+  grid-template: 1fr / 200px 1fr;
 
-
-@media only screen and (min-width: 769px) {
-  .page { grid-template: 1fr / 200px 1fr; }
-}
-
-@media only screen and (max-width: 768px) {
-  .page {
+  @media only screen and (max-width: 889px) {
     grid-template: $medNavHeight 1fr / 1fr;
     margin: 0;
     height: 100%;
     border-radius: 0;
   }
-}
 
-@media only screen and (max-width: 559px) {
-  .page { grid-template: 1fr #{$smallNavHeight} / 1fr; };
+  @media only screen and (max-width: 559px) {
+    grid-template: 1fr #{$smallNavHeight} / 1fr;
+  }
 }

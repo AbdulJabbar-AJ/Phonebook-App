@@ -10,6 +10,10 @@ export function removeGroup(id) {
 	return { type: 'REMOVE_GROUP', id }
 }
 
+export function removeDeletedGroupMember(id) {
+	return { type: 'REMOVE_DELETED_GROUP_MEMBER', id }
+}
+
 export function renameGroup(id, name) {
 	return { type: 'RENAME_GROUP', id, name }
 }
@@ -22,11 +26,14 @@ export function setGroupMembers(id, members) {
 	return { type: 'SET_GROUP_MEMBERS', id, members }
 }
 
-export function addGroup(name, id) {
-	return { type: 'ADD_GROUP', name, id }
+export function addGroup(group) {
+	return { type: 'ADD_GROUP', group }
 }
 
+export function setGroup(group) {
+	return {type: 'UPDATE_GROUP_OBJECT', group}
+}
 
-export function setDummyGroups() {
-	return { type: 'SET_DUMMY_GROUPS' }
+export function setGroupContact(contact) {
+	return {type: 'UPDATE_GROUP_CONTACT_OBJECT', contact}
 }

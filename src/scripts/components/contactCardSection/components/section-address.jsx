@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Entry from '../../entry/entry'
 import AddEntry from '../../addEntry/addEntry'
-import { address } from '../../../helpers/contacts'
+import { Address as address } from '../../../helpers/classConstructors/contact'
 import MapImage from '../../mapImage/mapImage'
 import classNames from 'classnames'
 
@@ -9,24 +9,25 @@ export default function Address ({data, editMode, onChangeCallback}) {
 	const [addresses, setAddresses] = useState(data)
 
 	useEffect(() => setAddresses(data), [data])
-	useEffect(() => onChangeCallback('address', addresses), [addresses])
 
-	const removeEntry = index => setAddresses(prevState => prevState.filter((other, i) => index !== i))
-	const addNewEntry = () => setAddresses(prevState => [...prevState, address])
+	const addNewEntry = () => onChangeCallback('address', [...addresses, new address])
+	const removeEntry = index => onChangeCallback('address', addresses.filter((address, i) => i !== index))
+
 
 	function updateAddresses(value, index, item) {
 		setAddresses(prevState => {
-			const updated = [...prevState]
-			updated[index][item] = value
-			return updated
+			const nextState = [...prevState]
+			nextState[index][item] = value
+			return nextState
 		})
+		onChangeCallback('address', addresses)
 	}
 
 	const mainInput = (i, address) => {
 		let _1 = ''; if (address.city && address.county) { _1 = ', ' }
 		let _2 = ''; if (address.postcode && address.country) { _2 = ', ' }
 		return editMode ? (
-			<div className={classNames('data', {edit: editMode})} onKeyUp={(e) => updateAddresses(e.target.value, i, e.target.name )}>
+			<div className={classNames('data', {edit: editMode})} onChange={(e) => updateAddresses(e.target.value, i, e.target.name )}>
 				<input name='line1' type='text' defaultValue={address.line1} placeholder='Line 1' />
 				<input name='line2' type='text' defaultValue={address.line2} placeholder='Line 2' />
 				<input name='city' type='text' defaultValue={address.city} placeholder='City/Town' />
@@ -60,7 +61,7 @@ export default function Address ({data, editMode, onChangeCallback}) {
 					editMode,
 					options: ['home', 'work', 'business', 'other'],
 					option: address.type,
-					setDropdownOption: (event) => updateAddresses(event.target.value, index, 'type'),
+					setDropdownOption: (e) => updateAddresses(e.target.value, index, 'type'),
 					mainInput: mainInput(index, address),
 					hasPrimary: false,
 					dataLength: data.length,

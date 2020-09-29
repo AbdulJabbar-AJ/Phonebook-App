@@ -7,6 +7,15 @@
 .cardSection {
   padding: 0.5rem 5px 2rem;
 
+  .validationMessage {
+    color: $red;
+    font-size: 0.8rem;
+    margin-left: 10px;
+    margin-top: 10px;
+    animation: 5s ease fadeOut forwards;
+    text-transform: initial;
+  }
+
   .heading {
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
@@ -25,6 +34,10 @@
     min-width: 70px;
     font-size: 0.8rem;
     margin-right: 10px;
+  }
+
+  select {
+    border-radius: 0.25rem;
   }
 
   .data {
@@ -64,14 +77,18 @@
       flex-grow: 0;
       margin-right: 1rem;
       margin-bottom: 1rem;
-      &:not(&.edit) {
+      &:not(.edit) {
         display: grid;
         grid-template: 1fr / 1fr 150px;
         grid-gap: 5px;
-        .mapImage {
-          width: 150px;
-          height: 150px;
+        @media only screen and (max-width: 449px) {
+          display: block;
+          .mapImage { margin-top: 10px; }
         }
+      }
+      .mapImage {
+        width: 150px;
+        height: 150px;
       }
     }
     img { border-radius: 0.25rem; }
@@ -87,10 +104,26 @@
     min-width: 90px;
   }
 
-  .note {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
+  &.notes {
+    .note {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    textarea {
+      background: $veryFaint;
+      outline: none;
+      border: none;
+      box-sizing: border-box;
+      border-radius: 0.25rem;
+      padding: 10px;
+      width: calc(100% - 20px);
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.5;
+      resize: none;
+      margin-left: 5px;
+    }
   }
 }

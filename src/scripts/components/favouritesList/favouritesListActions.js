@@ -9,6 +9,6 @@ export function showFavourite(id) {
 	return { type: 'SHOW_FAVOURITE', id }
 }
 
-export function setDummyFavs() {
-	return { type: 'SET_DUMMY_FAVS' }
+export function setFavourite(contact) {
+	return {type: 'UPDATE_FAVOURITE_OBJECT', contact}
 }

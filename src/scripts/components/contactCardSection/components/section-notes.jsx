@@ -1,33 +1,38 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 
 export default function Notes ({data, editMode, onChangeCallback}) {
 	const [notes, setNotes] = useState(data)
+	const textArea = useRef(null)
 
 	useEffect(() => setNotes(data), [data])
 	useEffect(() => onChangeCallback('notes', notes), [notes])
+	useEffect(resizeTextarea, [editMode])
 
-	function updateNotes(target) {
-		// const target = event.target
-		const value = target.value
+	function updateNotes(event) {
+		const value = event.target.value
 		setNotes(value)
-		resizeAndScroll(target)
+		resizeTextarea()
+		scrollOnChange()
 	}
 
-	function resizeAndScroll(target) {
-		// console.log('TODO, resize and scroll function')
-		// console.log(target.scrollHeight)
+	function resizeTextarea() {
+		if (editMode) {
+			const target = textArea.current
+			target.style.height = 0
+			target.style.height = `${target.scrollHeight + 10}px`
+		}
+	}
 
-
-		// target.style.height = 0
-		target.style.height = `${target.scrollHeight - 10}px`
-		// It may be better to make this function a helper
+	function scrollOnChange() {
+		const card = textArea.current.parentElement.parentElement.parentElement
+		card.scroll({top: card.scrollHeight})
 	}
 
 	return (
 		<div className='cardSection notes'>
 			<div className='heading'>Notes</div>
 			{editMode
-				? <textarea defaultValue={notes} onChange={(e) => updateNotes(e.target)} placeholder='Enter notes here...'/>
+				? <textarea ref={textArea} value={notes} onChange={updateNotes} placeholder='Enter notes here...'/>
 				: <div className='note'>{data}</div>
 			}
 		</div>
