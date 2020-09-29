@@ -14,6 +14,10 @@ export function deleteContact(id) {
 	return { type: 'DELETE_CONTACT', id }
 }
 
+export function setTopContact(id) {
+	return { type: 'SET_TOP_CONTACT', id }
+}
+
 export function sortContacts(sortBy) {
 	return { type: 'SORT_CONTACT', sortBy }
 }
@@ -28,4 +32,8 @@ export function setSortBy(sortBy) {
 
 export function setDisplayBy(displayBy) {
 	return { type: 'SET_DISPLAY_BY', displayBy }
+}
+
+export function setContact(contact) {
+	return {type: 'UPDATE_CONTACT_OBJECT', contact}
 }

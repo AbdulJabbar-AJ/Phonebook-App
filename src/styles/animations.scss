@@ -1,0 +1,19 @@
+@keyframes spin {
+  to { transform: rotateZ(360deg) }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1 }
+  80% { opacity: 1 }
+  to { opacity: 0 }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(0) }
+  to { transform: translateY(-100%) }
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(0) }
+  to { transform: translateX(-100%) }
+}

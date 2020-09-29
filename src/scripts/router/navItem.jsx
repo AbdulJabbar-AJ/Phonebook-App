@@ -3,7 +3,7 @@ import { Link } from '@reach/router'
 import { ReactSVG } from 'react-svg'
 import classNames from 'classnames'
 
-// NOTE, the getProps is a Reach Router thing
+// NOTE, getProps is a Reach Router thing
 const NavItem = ({to, name, icon}) => {
 	const isActive = ({isCurrent}) => ({ className: classNames('navItem', name, {active: isCurrent}) })
 

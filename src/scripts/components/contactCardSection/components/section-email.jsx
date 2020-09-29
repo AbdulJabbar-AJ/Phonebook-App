@@ -1,44 +1,48 @@
 import React, {useEffect, useState} from 'react'
 import Entry from '../../entry/entry'
 import AddEntry from '../../addEntry/addEntry'
-import { email } from '../../../helpers/contacts'
+import { Email as email } from '../../../helpers/classConstructors/contact'
 import validate from '../../../helpers/validate'
 
 export default function Email ({data, editMode, onChangeCallback}) {
 	const [emails, setEmails] = useState(data)
-	const [primary, setPrimary] = useState(data.findIndex(email => email.primary === true))
+	const [primary, setPrimary] = useState(-1)
 
-	useEffect(() => setEmails(data), [data])
-	useEffect(() => onChangeCallback('email', emails), [emails])
+	useEffect(() => {
+		setEmails(data)
+		setPrimary(data.findIndex(email => email.primary === true))
+	}, [data])
 
-	const removeEntry = index => setEmails(prevState => prevState.filter((email, i) => index !== i))
-	const addNewEntry = () => setEmails(prevState => [...prevState, email])
+
+	const addNewEntry = () => onChangeCallback('email', [...emails, new email])
+	// const removeEntry = index => onChangeCallback('phone', numbers.filter((number, i) => i !== index))
+	const removeEntry = index => onChangeCallback('email', emails.filter((email, i) => i !== index))
 
 
 	function updateEmails(value, index, item) {
 		setEmails(prevState => {
-			const updated = [...prevState]
-			updated[index][item] = value
-			return updated
+			const nextState = [...prevState]
+			nextState[index][item] = value
+			return nextState
 		})
+		onChangeCallback('email', emails)
 	}
 
 	function updatePrimary(index) {
-		updateEmails(false, primary, 'primary')
-		setPrimary(index)
+		primary !== -1 && updateEmails(false, primary, 'primary')
 		updateEmails(true, index, 'primary')
 	}
 
 	const mainInput = (i, email) => {
 		return editMode
-			? <input className='data' name='data' type='string' defaultValue={email} onKeyPress={(e) => validate.email(e)} onKeyUp={(e) => updateEmails(e.target.value, i, 'address')} placeholder='example@email.com' />
+			? <input className='data' name='data' type='string' value={email} onKeyPress={validate.email} onChange={(e) => updateEmails(e.target.value, i, 'address')} placeholder='example@email.com' />
 			: <div className='data'>{email}</div>
 	}
 
 	return (
 		<div className='cardSection email'>
 			<div className='heading'>Email
-				{editMode ? <small>Primary</small> : null}
+				{editMode && emails.length > 1 ? <small>Primary</small> : null}
 			</div>
 			{emails.map((email, index) => {
 				return <Entry {...{
@@ -48,7 +52,7 @@ export default function Email ({data, editMode, onChangeCallback}) {
 					editMode,
 					options: ['home', 'work', 'other'],
 					option: email.type,
-					setDropdownOption: (event) => updateEmails(event.target.value, index, 'type'),
+					setDropdownOption: (e) => updateEmails(e.target.value, index, 'type'),
 					mainInput: mainInput(index, email.address),
 					hasPrimary: true,
 					isPrimary: email.primary,

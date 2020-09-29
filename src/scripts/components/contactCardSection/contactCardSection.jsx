@@ -7,13 +7,13 @@ import Dates from './components/section-dates'
 import Other from './components/section-other'
 import Notes from './components/section-notes'
 
-export default function CardSection({type, data, editMode, onChangeCallback}) {
+export default function CardSection({type, data, editMode, onChangeCallback, validationMessage}) {
 	const propsToPass = {data, editMode, onChangeCallback}
 
 	const getSection = (() => {
 		switch (type) {
 			case 'name':
-				return <Name {...{...propsToPass}}/>
+				return <Name {...{data, onChangeCallback, validationMessage}}/>
 			case 'phone':
 				return <Phone {...{...propsToPass}}/>
 			case 'email':

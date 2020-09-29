@@ -1,4 +1,4 @@
-// TODO -  Must put these styles in appropriate components
+// TODO - NAP - Must put these styles in appropriate components
 
 .groupsView {
   position: relative;
@@ -10,11 +10,6 @@
     .editGroups.transform { visibility: hidden }
     &.slideUp > div { animation: 0.5s ease-in-out slideUp }
     &.slideDown > div { animation: 0.5s ease-in-out reverse slideUp }
-
-    @keyframes slideUp {
-      from { transform: translateY(0) }
-      to { transform: translateY(-100%) }
-    }
 
     &.blur {
       .groupSummaries, .editGroups {
@@ -105,7 +100,7 @@
     }
 
     .editGroups {
-      width: 100%;
+      width: calc(100% - 20px);
       display: grid;
       grid-template: 1fr / 22px 1fr;
       position: absolute;

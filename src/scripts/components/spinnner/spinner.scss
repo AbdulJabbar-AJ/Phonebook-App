@@ -6,7 +6,3 @@
   top: 10px;
   animation: 1.5s linear infinite spin;
 }
-
-@keyframes spin {
-  to { transform: rotateZ(360deg) }
-}

@@ -8,7 +8,7 @@
   cursor: pointer;
   margin: auto;
   &.noBg { background-color: inherit; }
-  &:not(&.toggleBtn):active { transform: translateY(1px); }
+  &:not(.toggleBtn):active { transform: translateY(1px); }
 
 
   // MIGHT NEED BUTTONGS TO BE SPECIFIC WIDTH SOMETIMES,

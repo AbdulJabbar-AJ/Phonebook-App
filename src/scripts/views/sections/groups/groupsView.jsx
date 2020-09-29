@@ -1,40 +1,54 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { setGroup, showGroup, showGroupContact } from '../../../components/groupsList/groupsListActions'
 import { setIsGroupView } from '../../viewActions'
 import GroupsListView from './groupsListView'
 import GroupView from './groupView'
 import classNames from 'classnames'
 
-const GroupsView = ({groups, activeGroup, isGroupView, setIsGroupView}) => {
-	const [group, setGroup] = useState({})
+const GroupsView = ({groups, activeGroup, showGroup, isGroupView, setIsGroupView, groupObject, setGroup, showGroupContact}) => {
 	const [slideLeft, setSlideLeft] = useState(false)
 	const [slideRight, setSlideRight] = useState(false)
-	const isGroupEmpty = () => !group.hasOwnProperty('id')
 
-	useEffect(() => {
-		if (isGroupEmpty()) {
-			if (activeGroup !== '') {
+	useEffect(showList, [activeGroup])
+
+	function showList() {
+		if (activeGroup) {
+			setIsGroupView(true)
+			if (!groupObject.hasOwnProperty('id')) {
 				setGroup(groups.find(group => group.id === activeGroup))
-				setIsGroupView(true)
-				if (!isGroupView) {
-					setSlideLeft(true)
-					setTimeout(() => setSlideLeft(false) ,500)
-				}
+				setSlideLeft(true)
+				setTimeout(() => setSlideLeft(false) ,500)
 			}
 		} else {
-			setSlideRight(true)
-			setTimeout(() => {
-				setSlideRight(false)
-				setIsGroupView(false)
+			setIsGroupView(false)
+			if (groupObject.hasOwnProperty('id')) {
 				setGroup({})
-			},500)
+				setSlideRight(true)
+				setTimeout(() => setSlideRight(false), 500)
+			}
 		}
-	}, [activeGroup])
+	}
+
+	function deactivateGroup() {
+		setSlideRight(true)
+		setTimeout(() => {
+			showGroupContact('')
+			showGroup('')
+			setGroup({})
+			setIsGroupView(false)
+			setSlideRight(false)
+		}, 500)
+	}
+
+	useEffect(() => {
+		activeGroup && setGroup(groups.find(group => group.id === activeGroup))
+	},[groups])
 
 	return (
 		<div className={ classNames('groupsViewContainer', {slideLeft, slideRight} )}>
 			<GroupsListView transform={isGroupView} />
-			{!isGroupEmpty() ? <GroupView {...{group, transform: isGroupView}} /> : null}
+			{isGroupView ? <GroupView {...{group: groupObject, transform: true, deactivateGroupCallback: deactivateGroup }} /> : null}
 		</div>
 	)
 }
@@ -42,7 +56,8 @@ const GroupsView = ({groups, activeGroup, isGroupView, setIsGroupView}) => {
 const mapStateToProps = ({groupsList, view}) => ({
 	groups: groupsList.groups,
 	activeGroup: groupsList.activeGroup,
+	groupObject: groupsList.groupObject,
 	isGroupView: view.isGroupView
 })
-const mapDispatchToProps = { setIsGroupView }
+const mapDispatchToProps = { setGroup, setIsGroupView, showGroup, showGroupContact }
 export default connect(mapStateToProps, mapDispatchToProps)(GroupsView)

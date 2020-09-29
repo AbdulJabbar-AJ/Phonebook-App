@@ -1,18 +1,27 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
-import { showContact } from './contactsListActions'
-import {deepCloneArray} from '../../helpers/clone'
+import { setTopContact } from './contactsListActions'
+import { deepCloneArray } from '../../helpers/clone'
 import ContactsListLetter from './components/contactsListLetter'
 import ContactListItem from './components/contactsListItem'
 import BlankMessage from '../blankMessage/blankMessage'
 
-function ContactsList({contacts, activeContact, showContact, searchTerms, sortBy, showContactCallback}) {
+function ContactsList({contacts, activeContact, searchTerms, sortBy, showContactCallback, setTopContact}) {
 	const rawContacts = deepCloneArray(contacts)
-	const [phonebook, setPhonebook] = useState(rawContacts)
+	const [phonebook, setPhonebook] = useState({})
 	const [letters, setLetters] = useState([])
 
-	useEffect(() => setPhonebook(generatePhonebook(sortContacts(filterContacts(rawContacts)))), [contacts, searchTerms, sortBy])
-	const isActive = contact => activeContact === contact.id
+	useEffect(() => {
+		setPhonebook(generatePhonebook(sortContacts(filterContacts(rawContacts))))
+	}, [contacts, searchTerms, sortBy])
+
+	useEffect(() => {
+		const letters = Object.keys(phonebook)
+		letters.length > 0 ? setTopContact(phonebook[letters[0]].contacts[0].id) : null
+	}, [phonebook])
+
+
+	const isActive = id => activeContact.id === id
 
 	function filterContacts(rawContacts) {
 		// IN raw contacts
@@ -53,6 +62,7 @@ function ContactsList({contacts, activeContact, showContact, searchTerms, sortBy
 
 		sortedContacts.forEach(contact => {
 			const value = getNameForSorting(contact.name, sortBy)
+			// TODO - Only add upper case letters
 			regex.test(value) ? letterSet.add(value[0]) : letterSet.add('#')
 		})
 
@@ -85,7 +95,7 @@ function ContactsList({contacts, activeContact, showContact, searchTerms, sortBy
 							<ContactsListLetter {...{letter}}  />
 							<div className='contacts'>
 								{phonebook[letter].contacts.map((contact) => {
-									return <ContactListItem {...{key: contact.id, contact, isActive: isActive(contact), onClickCallback: () => showContactCallback(contact.id)}} />
+									return <ContactListItem {...{key: contact.id, contact, isActive: isActive(contact.id), onClickCallback: () => showContactCallback(contact.id)}} />
 								})}
 							</div>
 						</div>
@@ -100,7 +110,5 @@ const mapStateToProps = ({contactsList}) => ({
 	sortBy: contactsList.sortBy,
 	searchTerms: contactsList.searchTerms
 })
-
-const mapDispatchToProps = { showContact }
-
-export default connect(mapStateToProps)(ContactsList)
+const mapDispatchToProps = { setTopContact }
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsList)

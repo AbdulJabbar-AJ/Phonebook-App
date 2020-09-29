@@ -5,7 +5,7 @@ export async function findAddress(addressQuery) {
 	return coords.json()
 }
 
-// TODO - Have seperate key for testing and live websites
+// TODO - NAP - Have seperate key for testing and live websites
 // Map ID is used to determine map style from Google Cloud Platform API dashboard
 
 export async function getImage(coords) {

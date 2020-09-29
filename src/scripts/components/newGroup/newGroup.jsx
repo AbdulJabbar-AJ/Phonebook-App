@@ -4,6 +4,7 @@ import Button from '../../components/button/button'
 const NewGroup = ({addGroupCallback, cancelNewGroup}) => {
 	const [groupName, setGroupName] = useState('')
 
+	// TODO - Validate name input
 	const updateGroupName = event => setGroupName(event.target.value)
 
 	return (

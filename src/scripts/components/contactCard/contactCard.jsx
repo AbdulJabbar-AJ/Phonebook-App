@@ -1,67 +1,69 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { deepCloneObject } from '../../helpers/clone'
 import CardSection from '../contactCardSection/contactCardSection'
 import Button from '../button/button'
+import { removeDeletedGroupMember, showGroupContact } from '../groupsList/groupsListActions'
 import { addFavourite, removeFavourite } from '../favouritesList/favouritesListActions'
-import {updateContact, deleteContact, addContact, showContact} from '../contactsList/contactsListActions'
+import { updateContact, deleteContact, addContact, showContact } from '../contactsList/contactsListActions'
+import validate from '../../helpers/validate'
 import edit from '../../../media/icons/edit.svg'
-import favTrue from '../../../media/icons/star.svg'
-import favFalse from '../../../media/icons/star-outline.svg'
+import favTrue from '../../../media/icons/favTrue.svg'
+import favFalse from '../../../media/icons/favFalse.svg'
 import trash from '../../../media/icons/trash.svg'
+import close from '../../../media/icons/close.svg'
 
-// TODO - NEED TO SCROLL TO TOP OF CONTACT WHEN SWITCHING BETWEEN CONTACTS
-// TODO - Make edit mode redux store, so can switch between tabs
+// TODO - NAP - Make edit mode redux store, so can switch between tabs
 
-function ContactCard({contact, favourites, addFavourite, removeFavourite, displayBy, updateContact, deleteContact, addContact, showContact, isNewContact, cancelNewContact}) {
+function ContactCard(props) {
+	const { contact, favourites, addFavourite, removeFavourite, displayBy, updateContact, deleteContact, closeContactCallback,
+		addContact, showContact, isNewContact, setIsNewContact, removeDeletedGroupMember, narrowView, activeGroupContact, showGroupContact
+	} = props
+
 	const initialDetails = deepCloneObject(contact)
 	const [editMode, setEditMode] = useState(false)
 	const [contactDetails, setContactDetails] = useState(initialDetails)
+	const [validationMessage, setValidationMessage] = useState('')
+	const cardRef = useRef(null)
 
 	useEffect(() => {
 		setContactDetails(deepCloneObject(contact))
-		setEditMode(false)
+		isNewContact ? setEditMode(true) : setEditMode(false)
+		cardRef.current.scroll({top: 0})
 	}, [contact])
 
-	useEffect(() => {
-		if (isNewContact) {
-			setEditMode(true)
-		}
-	}, [isNewContact])
-
-
-	// TODO - SUPER IMPORTANT TO AVOID TONNES OF BUGS AND RUNTIME ERRORS // VALIDATE CONTACT DETAILS HERE TO MAKE SURE FOR MINIMUM OF NAME
 	const onChangeCallback = (section, data) => setContactDetails(prevState => ({ ...prevState, [section]: data }))
-	const flipEditMode = () => setEditMode(!editMode)
 	const checkFav = id => favourites.some(favId => favId === id)
 	const toggleStar = id => checkFav(id) ? favTrue : favFalse
 
-
-	// TODO - After starting a new contact, while in edit mode, if you press '+' again, it gets out of editMode, and subsequent clicks of '+' do nothing
-	// TODO - Same thing happens if you save and then try and click '+' again
-	// Validation checks for contactCard will only partially fix this I think
 	function saveChange(id) {
-		if (isNewContact) {
-			addContact(contactDetails)
+		if (validate.name(contactDetails.name)) {
+			if (isNewContact) {
+				addContact(contactDetails)
+				setIsNewContact(false)
+				showContact(id)
+			} else {
+				updateContact(id, contactDetails)
+			}
+			setEditMode(!editMode)
 		} else {
-			updateContact(id, contactDetails)
+			setValidationMessage('You must enter at least a first, last, or company name')
+			setTimeout(() => setValidationMessage(''), 5000)
+			cardRef.current.scroll({top: 0})
 		}
-		flipEditMode()
 	}
 
 	function cancelChange() {
-		isNewContact ? cancelNewContact() : setContactDetails(initialDetails)
-		flipEditMode()
+		isNewContact ? setIsNewContact(false) : setContactDetails(initialDetails)
+		setEditMode(!editMode)
 	}
 
 	function removeContact(id) {
 		deleteContact(id)
-		flipEditMode()
-		// TODO - NEED TO MAKE SURE THE CONTACT DELETES FROM EVERYWHERE, CONTACTS, FAVOURITES, ALL GROUPS!!!!!!!!
-		// TODO - NEED TO MAKE SURE IT SELECTS A DIFFERENT CONTACT AFTER DELETING
-		// BUT IF VIEW IS NARROW, WANT TO JUST REVERT BACK TO CONTACTSLIST
-		// BUT IF VIEW IS NARROW, WANT TO JUST REVERT BACK TO CONTACTSLIST
-		// SO MAKE A closeContact FUNCTION WHICH WILL GO BACK TO LIST IF NARROW OR ACTIVATE FIRST ITEM IF WIDE
+		removeFavourite(id)
+		removeDeletedGroupMember(id)
+		id === activeGroupContact && showGroupContact('')
+		setEditMode(!editMode)
 	}
 
 	function toggleFav(id) {
@@ -71,42 +73,21 @@ function ContactCard({contact, favourites, addFavourite, removeFavourite, displa
 			removeFavourite(id)
 		} else addFavourite(id)
 
-
-		// TODO - Change favourite is contact deleted
-		// let next
-		// if (activeFav && activeFav.id === id) {
-		// 	if (favs.length > 1) {
-		// 		if (favs[0].conId === id) {
-		// 			next = favs[1].conId
-		// 		} else {
-		// 			next = favs[0].conId
-		// 		}
-		// 		if (windowWidth !== 'small') {
-		// 			showFav(contacts.find(con => con.id === next))
-		// 		} else hideFav()
-		// 	} else hideFav()
-		// }
 	}
-
-// 	function checkGroup(id, group) {
-// 		for (let i = 0; i < group.length; i++) {
-// 			if (group.members.includes(id)) {
-// 				return true
-// 			}
-// 		}
-// 	}
 
 	// This must come from props not state, as we don't want it to update on change of edit fields
 	const first = isNewContact ? 'New Contact' : contact.name[displayBy]
 	const last = displayBy === 'first' ? contact.name.last : contact.name.first
+	const { prefix, company } = contact.name
+	const closeBtn = narrowView && !isNewContact ? <Button type='icon' classname='btn-close' icon={close} noBg={false} onClickCallback={closeContactCallback} /> : null
 	const title = (
 		<div className='title'>
-			{/*{closeBtn}*/}
+			{closeBtn}
 			{first || last
-				? <div className='fullName'>{contact.name.prefix}{first}{displayBy === 'last' && first && last ? ', ' : ' '}{last}</div>
+				? <div className='fullName'>{prefix ? `${prefix} ` : null}{first}{displayBy === 'last' && first && last ? ', ' : ' '}{last}</div>
 				: null
 			}
-			<div className='company'>{contact.name.company}</div>
+			<div className='company'>{company}</div>
 		</div>
 	)
 
@@ -128,8 +109,8 @@ function ContactCard({contact, favourites, addFavourite, removeFavourite, displa
 	return (
 		<div className='contactCard'>
 			{title}
-			<div className='details'>
-				{editMode ? <CardSection {...{type: 'name', data: name, editMode, onChangeCallback }}/> : null}
+			<div className='details' ref={cardRef}>
+				{editMode ? <CardSection {...{type: 'name', data: name, editMode, onChangeCallback, validationMessage, narrowView}}/> : null}
 				<CardSection {...{type: 'phone', data: phone, editMode, onChangeCallback }}/>
 				<CardSection {...{type: 'email', data: email, editMode, onChangeCallback}}/>
 				<CardSection {...{type: 'address', data: address, editMode, onChangeCallback}}/>
@@ -143,13 +124,15 @@ function ContactCard({contact, favourites, addFavourite, removeFavourite, displa
 }
 
 
-const mapStateToProps = ({favouritesList, contactsList}) => ({
+const mapStateToProps = ({favouritesList, contactsList, view, groupsList}) => ({
 	favourites: favouritesList.favourites,
-	displayBy: contactsList.displayBy
+	displayBy: contactsList.displayBy,
+	narrowView: view.narrowView,
+	activeGroupContact: groupsList.activeGroupContact,
 })
 
 const mapDispatchToProps = {
-	addFavourite, removeFavourite, updateContact, deleteContact, addContact, showContact
+	addFavourite, removeFavourite, updateContact, deleteContact, addContact, showContact, removeDeletedGroupMember, showGroupContact
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactCard)
