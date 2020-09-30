@@ -25,7 +25,7 @@ const ContactsView = ({contacts, activeContact, topContact, showContact, narrowV
 	function showCard() {
 		if (!isNewContact) {
 			if (!activeContact) {
-				if (!narrowView && topContact !== '') {
+				if (!narrowView && topContact !== '' && contacts.some(contact => contact.id === topContact)) {
 					setContact(contacts.find(contact => contact.id === topContact))
 				} else {
 					setContact({})

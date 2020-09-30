@@ -15,7 +15,7 @@
     }
     &.narrowView {
       grid-template: 1fr / 100% 100%;
-      overflow: hidden; // TODO - temporary
+      overflow: hidden;
 
       .mainPanel {
         transform: translateX(-100%);
@@ -142,8 +142,10 @@
 }
 
 @media only screen and (max-width: 559px) {
-  .mainPanelContainer, .sidePanelContainer, .fullPanelContainer {
-    height: calc(100vh - #{$smallNavHeight});
+  .viewContainer {
+    .mainPanelContainer, .sidePanelContainer, .fullPanelContainer {
+      height: calc(100vh - #{$smallNavHeight});
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import { contacts } from '../../helpers/initiData'
+import { contacts } from '../../helpers/initData'
 
 const initState = {
 	contacts: [ ...contacts ],

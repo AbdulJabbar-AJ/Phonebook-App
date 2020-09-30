@@ -31,7 +31,7 @@ export default function Address ({data, editMode, onChangeCallback}) {
 				<input name='line1' type='text' defaultValue={address.line1} placeholder='Line 1' />
 				<input name='line2' type='text' defaultValue={address.line2} placeholder='Line 2' />
 				<input name='city' type='text' defaultValue={address.city} placeholder='City/Town' />
-				<input name='county' type='text' defaultValue={address.county} placeholder='County' />
+				<input name='county' type='text' defaultValue={address.county} placeholder='County/City' />
 				<input name='postcode' type='text' defaultValue={address.postcode} placeholder='Post Code' />
 				<input name='country' type='text' defaultValue={address.country} placeholder='Country' />
 			</div>

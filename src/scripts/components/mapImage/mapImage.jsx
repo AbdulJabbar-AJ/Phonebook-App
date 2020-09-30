@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { memoiseMapImage, getCoords } from './mapImageActions'
-import { findAddress, getImage } from '../../api/googleMapsRequest'
+import { memoiseMapImage } from './mapImageActions'
+import { findAddress, getImage, getCoords } from '../../api/googleMapsRequest'
 import random from '../../../media/icons/remove-circle.svg'
 import Spinner from '../spinnner/spinner'
 
-// TODO - Need algorithm to determine which address search query to try, or a chain of things to try. Need to consider if the input is lousy
-// TODO - Use Redux Thunk to cancel async method in useEffect, or use useEffect cleanup
+// TODO - Need algorithm to determine which address search query to try, or a chain of things to try.
 
 function MapImage({address, maps, memoiseMapImage}) {
 	// line1, line2, city, county, postcode, country
