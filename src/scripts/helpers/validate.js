@@ -13,7 +13,9 @@ const phone = event => {
 
 
 
-const email = () => {
+const email = (value) => {
+	// const regex = RegExp('^[a-zA-Z]')
+	// regex.test(value)
 	console.log('Email needs to be validated')
 }
 

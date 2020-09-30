@@ -1,4 +1,4 @@
-import { favourites } from '../../helpers/initiData'
+import { favourites } from '../../helpers/initData'
 
 const initState = {
 	favourites: [ ...favourites ],

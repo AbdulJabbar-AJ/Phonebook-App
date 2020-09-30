@@ -15,7 +15,7 @@
     }
     &.narrowView {
       grid-template: 1fr / 100% 100%;
-      overflow: hidden; // TODO - temporary
+      overflow: hidden;
 
       .mainPanel {
         transform: translateX(-100%);

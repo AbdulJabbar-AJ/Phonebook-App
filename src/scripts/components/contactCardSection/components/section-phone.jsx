@@ -9,7 +9,7 @@ import validate from '../../../helpers/validate'
 // Therefore, onChangeCallback called manually after specific events instead of useEffect for [numbers], to prevent infinite render loop
 
 export default function Phone ({data, editMode, onChangeCallback}) {
-	const [numbers, setNumbers] = useState([...data]) // TODO - this was [] before, does it cause any issues?
+	const [numbers, setNumbers] = useState([...data])
 	const [primary, setPrimary] = useState(-1)
 
 	useEffect(() => {

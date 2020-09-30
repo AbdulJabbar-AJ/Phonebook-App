@@ -1,4 +1,4 @@
-import { groups } from '../../helpers/initiData'
+import { groups } from '../../helpers/initData'
 
 const initState = {
 	groups: [ ...groups ],

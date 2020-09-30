@@ -62,8 +62,7 @@ function ContactsList({contacts, activeContact, searchTerms, sortBy, showContact
 
 		sortedContacts.forEach(contact => {
 			const value = getNameForSorting(contact.name, sortBy)
-			// TODO - Only add upper case letters
-			regex.test(value) ? letterSet.add(value[0]) : letterSet.add('#')
+			regex.test(value) ? letterSet.add(value[0].toUpperCase()) : letterSet.add('#')
 		})
 
 		// Set Letters Here
@@ -80,7 +79,7 @@ function ContactsList({contacts, activeContact, searchTerms, sortBy, showContact
 		sortedContacts.forEach(contact => {
 			const value = getNameForSorting(contact.name, sortBy)
 			let array
-			regex.test(value) ? array = value[0] : array = '#'
+			regex.test(value) ? array = value[0].toUpperCase() : array = '#'
 			generatedPhonebook[array].contacts.push(contact)
 		})
 		return generatedPhonebook
